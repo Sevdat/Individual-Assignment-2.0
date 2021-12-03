@@ -12,8 +12,8 @@ internal class ProgramKtTest {
 
     @Test
     fun asf11x11() {
-        kotlin.test.assertEquals(mapOf("Арсенал" to 11, "Бавария" to 4, "Интер" to 9, "Барселона" to 19,
-            "lol" to 11, "lollord" to 4, "lolking" to 9, "lolgod" to 19, "kek" to 11, "keklord" to 4, "kekking" to 9),
+        kotlin.test.assertEquals(mapOf("Арсенал" to 14, "Бавария" to 5, "Интер" to 10, "Барселона" to 22, "lol" to 14,
+            "lollord" to 5, "lolking" to 10, "lolgod" to 22, "kek" to 14, "keklord" to 5, "kekking" to 10),
             asf(File("src/text1.txt"))
         )
     }
