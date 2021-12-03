@@ -1,24 +1,21 @@
 import java.io.File
 
-fun main(){
+fun asf(Text: File):MutableMap<String,Int>{
 
-//из текстового файла в список
+//из текстового файла в список. Считывает каждую строку и преобразует каждую строку в индекс списка
     var fileList = mutableListOf<String>()
+    Text.forEachLine {fileList = (fileList + listOf(it)) as MutableList<String>}
+    println("fileList----------------= $fileList")
 
-//считывает каждую строку и преобразует каждую строку в индекс списка
-    File("src/text.txt").forEachLine {fileList = (fileList + listOf(it)) as MutableList<String>}
-
-//вынимает все, кроме цифр без каких-либо пробелов
+//вынимает все, кроме алфавитов без каких-либо пробелов и все, кроме цифр без каких-либо пробелов
     var numberList = mutableListOf<String>()
-    for(i in fileList){
-    numberList = (numberList + i.replace(Regex("[^0-9]"), "" )) as MutableList<String>
-    }
-
-//вынимает все, кроме алфавитов без каких-либо пробелов
     var nameList = mutableListOf<String>()
     for(i in fileList){
-        nameList = (nameList + i.replace(Regex("[ 0-9]"), "" )) as MutableList<String>
+    numberList = (numberList + i.replace(Regex("[^0-9]"), "")) as MutableList<String>
+    nameList = (nameList + i.replace(Regex("[ 0-9]"), "")) as MutableList<String>
     }
+    println("numberList--------------= $numberList")
+    println("nameList----------------= $nameList")
 
 //дает координаты X и Y в формате двойного числа в первом списке, а во втором списке он выдает обратную координату
     var normalCoordinate = mutableMapOf<Double, Char>()
@@ -28,6 +25,7 @@ fun main(){
         val giveCoordinate = mutableMapOf<Double, Char>()
         val reverseGiveCoordinate = mutableMapOf<Double, Char>()
         var y = -1
+        //here is the problem
         while (y != numberList.size - 1) {
             y += 1
             giveCoordinate["$y.$x".toDouble()] = numberList[y][x]
@@ -37,6 +35,8 @@ fun main(){
         }
         x += 1
     }
+    println("normalCoordinate--------= $normalCoordinate")
+    println("reverseCoordinate-------= $reverseCoordinate")
 
 //Фильтрует совпадающие координаты X и Y, и организует карту от наименьшего индекса до наибольшего индекса.
     val filterCoordinate = normalCoordinate.filter {
@@ -44,6 +44,8 @@ fun main(){
 
     val filterReverseCoordinate = reverseCoordinate.filter {
             (i, _) -> ((i % "${i.toInt()}.${i.toInt()}".toDouble()) != 0.0) && i !=0.0 }.toSortedMap()
+    println("filterCoordinate--------= $filterCoordinate")
+    println("filterReverseCoordinate-= $filterReverseCoordinate")
 
 //Соответствует каждому индексу из первого списка и второго списка, потому что числа принадлежат друг другу
     var pair = mutableListOf<Pair<Char?, Char?>>()
@@ -51,9 +53,11 @@ fun main(){
         val joinCoordinate = listOf(Pair(filterCoordinate[i], filterReverseCoordinate[i]))
         pair = (pair + joinCoordinate) as MutableList<Pair<Char?, Char?>>
     }
+    println("pair--------------------= $pair")
 
 //отфильтровывает null значения
     val nullFilter = pair.filter { (i, e) -> i != null && e != null }
+    println("nullFilter--------------= $nullFilter")
 
 //от каждой пары начисляются очки в зависимости от первого номера
     val point = mutableListOf<Int>()
@@ -64,6 +68,7 @@ fun main(){
             else -> point.add(1)
         }
     }
+    println("point-------------------= $point")
 
 //добавляет значения вместе в зависимости от размера списка
     var score = mutableListOf<Int>()
@@ -72,13 +77,20 @@ fun main(){
     var f = 0
     while(g != numberList.size) {
         g += 1
+
         while (f != (numberList.size -1) * g) {
             combineDelete = (combineDelete + point[f]) as MutableList
             f += 1
         }
+        // dimension 3x3 = 9 only 6 match
+        // dimension 4x4 = 16 only 12 match
+        // dimension 5x5 = 25 only 20 match
+        // dimension 11x11 = 121 only 110 match  9  11
         score = (score + combineDelete.sum()) as MutableList<Int>
+        println("combineDelete-----------= $combineDelete")
         combineDelete.clear()
     }
+    println("score-------------------= $score")
 
 //объединяет имена и добавленные баллы вместе
     val teamScore = mutableMapOf<String, Int>()
@@ -88,9 +100,15 @@ fun main(){
         teamScore[nameList[r]] = score[r]
 
     }
-    println(teamScore)
-
+    println("teamScore---------------= $teamScore")
+    return teamScore
 }
+
+// (0) (4) (1) (1) | (0.0) (0.1) (0.2) (0.3)
+// (1) (0) (2) (3) | (1.0) (1.1) (1.2) (1.3)
+// (1) (2) (0) (0) | (2.0) (2.1) (2.2) (2.3)
+// (3) (8) (0) (0) | (3.0) (3.1) (3.2) (3.3)
+
 //fun main1() {
 //    var x = 0
 //    var f = 0
@@ -104,6 +122,7 @@ fun main(){
 //        listOf(1, 2, 0, 0),
 //        listOf(3, 8, 0, 0),
 //    )
+
 ////дает координаты X и Y в формате двойного числа в первом списке, а во втором списке он выдает обратную координату
 //    var norcor = mapOf<Double, Int>()
 //    var revnorcor = mapOf<Double, Int>()
