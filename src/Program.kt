@@ -45,7 +45,6 @@ fun asf(textdoc:File):MutableMap<String,Int> {
 //для цикла из координаты (why does orginize.clear() not work but like this it does)
     var n = 1
     var u = 0
-    var orgnize = mutableListOf<Int>()
     var orglist = mutableListOf<List<Int>>()
     while (intList.size - u != 0) {
         var ds = mutableListOf<Int>()
@@ -56,6 +55,7 @@ fun asf(textdoc:File):MutableMap<String,Int> {
         orglist = (orglist + listOf(ds)) as MutableList
         n += 1
     }
+    println("orglist-----------------= $orglist")
 //дает координаты X и Y в формате двойного числа в первом списке, а во втором списке он выдает обратную координату
     var x = 0
     var normalCoordinate = mutableMapOf<String, Int>()
