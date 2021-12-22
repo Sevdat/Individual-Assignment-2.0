@@ -24,5 +24,12 @@ internal class ProgramKtTest {
             asf(File("src/text2.txt"))
         )
     }
+    @Test
+//make an if statement separating one while statement for 4 or less and another for values bigger than 4
+    fun asf2dignum() {
+        kotlin.test.assertEquals(mapOf("Арсенал" to 4, "Бавария" to 1, "Интер" to 3, "Барселона" to 7),
+            asf(File("src/text3.txt"))
+        )
+    }
 }
 
