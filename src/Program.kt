@@ -57,24 +57,25 @@ fun asf(textdoc:File):MutableMap<String,Int> {
     }
     println("orglist-----------------= $orglist")
 //дает координаты X и Y в формате двойного числа в первом списке, а во втором списке он выдает обратную координату
+data class cell(val m:Int,val l: Int)
     var x = 0
-    var normalCoordinate = mutableMapOf<String, Int>()
-    var reverseCoordinate = mutableMapOf<String, Int>()
+    var normalCoordinate = mutableMapOf<cell, Int>()
+    var reverseCoordinate = mutableMapOf<cell, Int>()
     while (x != orglist.size) {
-        val giveCoordinate = mutableMapOf<String, Int>()
-        val reverseGiveCoordinate = mutableMapOf<String, Int>()
+        val giveCoordinate = mutableMapOf<cell, Int>()
+        val reverseGiveCoordinate = mutableMapOf<cell, Int>()
         var y = -1
         while (y != orglist.size - 1) {
             y += 1
-            giveCoordinate["${y}.${x}".filter { y != x }] = orglist[y][x]
-            reverseGiveCoordinate["${x}.${y}".filter { y != x }] = orglist[y][x]
-            normalCoordinate = (normalCoordinate + giveCoordinate) as MutableMap<String, Int>
-            reverseCoordinate = (reverseCoordinate + reverseGiveCoordinate) as MutableMap<String, Int>
+            if (x != y) {
+                giveCoordinate[cell(y, x)] = orglist[y][x]
+                reverseGiveCoordinate[cell(x, y)] = orglist[y][x]
+                normalCoordinate = (normalCoordinate + giveCoordinate) as MutableMap<cell, Int>
+                reverseCoordinate = (reverseCoordinate + reverseGiveCoordinate) as MutableMap<cell, Int>
+            }
         }
         x += 1
     }
-    normalCoordinate.remove("")
-    reverseCoordinate.remove("")
     println("normalCoordinate--------= $normalCoordinate")
     println("reverseCoordinate-------= $reverseCoordinate")
 
@@ -124,7 +125,7 @@ fun asf(textdoc:File):MutableMap<String,Int> {
 
     }
     println("teamScore---------------= $teamScore")
-return teamScore
+    return teamScore
 }
 ////Фильтрует совпадающие координаты X и Y, и организует карту от наименьшего индекса до наибольшего индекса.
 //    val filterCoordinate = normalCoordinate.filter {
