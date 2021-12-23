@@ -36,7 +36,8 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
     var d = -1
     var f = -1
     var list3 = mutableListOf<Int>()
-    val point = mutableListOf<Int>()
+    var list4 = mutableListOf<Int>()
+    var point = mutableListOf<Int>()
     while (d != kes.size - 1){
         d += 1
         var list2 = mutableListOf<Pair<Int,Int>>()
@@ -46,37 +47,26 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
         }
         for ((q, w) in list2.filter { i -> i != Pair(-1,-1)}) {
             when {
-                (q.toString().toInt() > w.toString().toInt()) -> point.add(3)
-                (q.toString().toInt() < w.toString().toInt()) -> point.add(0)
+
+                (q > w) -> point.add(3)
+                (q < w) -> point.add(0)
                 else -> point.add(1)
             }
         }
-        list3 = (list3 + point) as MutableList<Int>
+        list3 = listOf(point.sum()) as MutableList<Int>
+        list4 += list3
         list2.clear()
+        point.clear()
         f = -1
     }
+    println(list4)
 
-    //combining the score
-    var score = mutableListOf<Int>()
-    var combineDelete = mutableListOf<Int>()
-    var g = 0
-    var j = 0
-    while(g != kes.size) {
-        g += 1
-        while (j != (kes.size - 1) * g) {
-            combineDelete = (combineDelete + point[j]) as MutableList
-            j += 1
-        }
-        score = (score + combineDelete.sum()) as MutableList<Int>
-        println("combineDelete-----------= $combineDelete")
-        combineDelete.clear()
-    }
 
         val teamScore = mutableMapOf<String, Int>()
         var r = -1
         while (r != kes.size - 1) {
             r += 1
-            teamScore[nameList[r]] = score[r]
+            teamScore[nameList[r]] = list4[r]
 
         }
         println("teamScore---------------= $teamScore")
