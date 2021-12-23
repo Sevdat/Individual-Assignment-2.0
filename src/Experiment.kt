@@ -13,25 +13,21 @@ fun asf(textdoc:File):MutableMap<String,Int> {
     }
     println("nameList----------------= $nameList")
     println("numberList--------------= $numberList")
-
-//удалите лишние пробелы(https://www.youtube.com/watch?v=BSr6cLoyHek&t=61s)
-    var intString = ""
-    var checker = ""
-    for (i in numberList.toString()) {
-        if (!(checker == " " && i == ' ' || i == ','|| i == ']'|| i == '[')) {
-            intString = (intString + i)
-        }
-        checker = i.toString()
+    var vs = 0
+    var kes = mutableListOf<String>()
+    for (i in numberList) {
+        while (vs != numberList.size ) {
+            kes += numberList[vs].split(" ").filter { p -> p != "" }
+            vs += 1
     }
-    println("intString---------------= $intString")
+    }
+    println(kes)
 
 //удаляет квадратную скобку и разделяет пробелы запятой, от list<String> к list<Int>
-    var splitString = intString.split(" ")
     var intList = mutableListOf<Int>()
-    for (i in splitString) {
+    for (i in kes) {
         intList += i.toInt()
     }
-    println("splitString-----$splitString")
     println("intList-----------------= $intList")
 //для цикла из координаты (why does orginize.clear() not work but like this it does)
     var n = 1
@@ -49,7 +45,6 @@ fun asf(textdoc:File):MutableMap<String,Int> {
     println("orglist----------------=$orglist")
 
 fun kek(x: Int, y:Int): Pair<Int,Int> {
-
         if(x != y) {
             var list = orglist[x][y]
             var list1 = orglist[y][x]
@@ -57,6 +52,7 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
         }
     return Pair(-1,-1)
 }
+
 //from coordinate to adding score
     var d = -1
     var f = -1
