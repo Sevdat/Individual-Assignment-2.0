@@ -13,7 +13,6 @@ fun asf(textdoc:File):MutableMap<String,Int> {
     }
     println("nameList----------------= $nameList")
     println("numberList--------------= $numberList")
-    println("-------Test_______-")
     var vs = 0
     var kes = mutableListOf<List<String>>()
     for (i in numberList) {
@@ -22,7 +21,7 @@ fun asf(textdoc:File):MutableMap<String,Int> {
             vs += 1
     }
     }
-    println(kes[0][0])
+    println("kes---------------------= $kes")
 
 fun kek(x: Int, y:Int): Pair<Int,Int> {
         if(x != y) {
