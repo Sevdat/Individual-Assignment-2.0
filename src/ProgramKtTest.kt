@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.File
 
-internal class ProgramKtTest {
+internal class ExperimentKtTest {
     @Test
     fun asf4x4() {
         kotlin.test.assertEquals(mapOf("Арсенал" to 4, "Бавария" to 1, "Интер" to 3, "Барселона" to 7),

@@ -1,6 +1,6 @@
 import java.io.File
 
-fun asf1(textdoc:File):MutableMap<String,Int> {
+fun asf(textdoc:File):MutableMap<String,Int> {
     val fileList =  textdoc.readLines()
     println("fileList-----------------= $fileList")
 
@@ -18,28 +18,20 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
     var intString = ""
     var checker = ""
     for (i in numberList.toString()) {
-        if (!(checker == " " && i == ' ')) {
+        if (!(checker == " " && i == ' ' || i == ','|| i == ']'|| i == '[')) {
             intString = (intString + i)
         }
         checker = i.toString()
     }
     println("intString---------------= $intString")
 
-//удаляет квадратную скобку и разделяет пробелы запятой
-    var stringIntList = mutableListOf<String>(intString)
-    var splitString = mutableListOf<String>()
-    for (i in stringIntList) {
-        splitString = (splitString + i.replace(Regex("[\\[\\]']|,"), "").split(" ")) as MutableList<String>
-    }
-    println("stringIntList-----------= $stringIntList")
-    println("splitString-------------= $splitString")
-
-
-//от list<String> к list<Int>
+//удаляет квадратную скобку и разделяет пробелы запятой, от list<String> к list<Int>
+    var splitString = intString.split(" ")
     var intList = mutableListOf<Int>()
     for (i in splitString) {
         intList += i.toInt()
     }
+    println("splitString-----$splitString")
     println("intList-----------------= $intList")
 //для цикла из координаты (why does orginize.clear() not work but like this it does)
     var n = 1
