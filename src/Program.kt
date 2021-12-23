@@ -1,5 +1,5 @@
 import java.io.File
-fun asf1(textdoc:File):MutableMap<String,Int> {
+fun asf(textdoc:File):MutableMap<String,Int> {
 
 //из текстового файла в список. Считывает каждую строку и преобразует каждую строку в индекс списка
     val fileList = textdoc.readLines()

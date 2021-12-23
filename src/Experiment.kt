@@ -1,6 +1,6 @@
 import java.io.File
 
-fun asf(textdoc:File):MutableMap<String,Int> {
+fun asf1(textdoc:File):MutableMap<String,Int> {
     val fileList =  textdoc.readLines()
     println("fileList-----------------= $fileList")
 
