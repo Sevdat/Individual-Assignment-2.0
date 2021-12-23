@@ -13,42 +13,22 @@ fun asf(textdoc:File):MutableMap<String,Int> {
     }
     println("nameList----------------= $nameList")
     println("numberList--------------= $numberList")
+    println("-------Test_______-")
     var vs = 0
-    var kes = mutableListOf<String>()
+    var kes = mutableListOf<List<String>>()
     for (i in numberList) {
         while (vs != numberList.size ) {
             kes += numberList[vs].split(" ").filter { p -> p != "" }
             vs += 1
     }
     }
-    println(kes)
-
-//удаляет квадратную скобку и разделяет пробелы запятой, от list<String> к list<Int>
-    var intList = mutableListOf<Int>()
-    for (i in kes) {
-        intList += i.toInt()
-    }
-    println("intList-----------------= $intList")
-//для цикла из координаты (why does orginize.clear() not work but like this it does)
-    var n = 1
-    var u = 0
-    var orglist = mutableListOf<List<Int>>()
-    while (intList.size - u != 0) {
-        var ds = mutableListOf<Int>()
-        while (intList.size / nameList.size * n - u != 0) {
-            ds = (ds + listOf(intList[u])) as MutableList<Int>
-            u += 1
-        }
-        orglist = (orglist + listOf(ds)) as MutableList
-        n += 1
-    }
-    println("orglist----------------=$orglist")
+    println(kes[0][0])
 
 fun kek(x: Int, y:Int): Pair<Int,Int> {
         if(x != y) {
-            var list = orglist[x][y]
-            var list1 = orglist[y][x]
-            return Pair(list, list1)
+            var list = kes[x][y]
+            var list1 = kes[y][x]
+            return Pair(list.toInt(), list1.toInt())
         }
     return Pair(-1,-1)
 }
@@ -58,10 +38,10 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
     var f = -1
     var list3 = mutableListOf<Int>()
     val point = mutableListOf<Int>()
-    while (d != orglist.size - 1){
+    while (d != kes.size - 1){
         d += 1
         var list2 = mutableListOf<Pair<Int,Int>>()
-        while(f != orglist.size - 1) {
+        while(f != kes.size - 1) {
             f += 1
             list2 = (list2 + kek(d,f)) as MutableList<Pair<Int, Int>>
         }
@@ -82,9 +62,9 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
     var combineDelete = mutableListOf<Int>()
     var g = 0
     var j = 0
-    while(g != orglist.size) {
+    while(g != kes.size) {
         g += 1
-        while (j != (orglist.size - 1) * g) {
+        while (j != (kes.size - 1) * g) {
             combineDelete = (combineDelete + point[j]) as MutableList
             j += 1
         }
@@ -95,7 +75,7 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
 
         val teamScore = mutableMapOf<String, Int>()
         var r = -1
-        while (r != orglist.size - 1) {
+        while (r != kes.size - 1) {
             r += 1
             teamScore[nameList[r]] = score[r]
 
