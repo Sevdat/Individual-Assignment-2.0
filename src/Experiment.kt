@@ -2,15 +2,16 @@ import java.io.File
 
 fun asf1(textdoc:File):MutableMap<String,Int> {
 
+    val teamScore = mutableMapOf<String, Int>()
     var numberList = mutableListOf<String>()
     var nameList = mutableListOf<String>()
-    var stringList = mutableListOf<List<String>>()
-    var d = -1
-    val teamScore = mutableMapOf<String, Int>()
+    val stringList = mutableListOf<List<String>>()
     val listSize = textdoc.readLines().size
-    var list4 = mutableListOf<Int>()
+    val sumPoint = mutableListOf<Int>()
     var list2 = mutableListOf<Pair<Int,Int>>()
-    var point = mutableListOf<Int>()
+    val point = mutableListOf<Int>()
+
+    var d = -1
     var sd = 0
     var vs = 0
 
@@ -31,8 +32,8 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
 
         fun kek(x: Int, y:Int): Pair<Int,Int> {
             if(x != y) {
-                var list = stringList[x][y]
-                var list1 = stringList[y][x]
+                val list = stringList[x][y]
+                val list1 = stringList[y][x]
                 return Pair(list.toInt(), list1.toInt())
             }
             return Pair(-1,-1)
@@ -52,12 +53,12 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
             }
         }
 
-       var list3 = listOf(point.sum()) as MutableList<Int>
-        list4 += list3
+       val list3 = listOf(point.sum()) as MutableList<Int>
+        sumPoint += list3
         list2.clear()
         point.clear()
 
-        teamScore[nameList[d]] = list4[d]
+        teamScore[nameList[d]] = sumPoint[d]
     }
     println("nameList----------------= $nameList")
     println("numberList--------------= $numberList")
