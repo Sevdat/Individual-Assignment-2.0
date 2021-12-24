@@ -2,29 +2,32 @@ import java.io.File
 
 fun asf1(textdoc:File):MutableMap<String,Int> {
 
-//вынимает все, кроме алфавитов и все, кроме цифр и удаляет сгенерированный пробел
     var numberList = mutableListOf<String>()
     var nameList = mutableListOf<String>()
     var stringList = mutableListOf<List<String>>()
-    var vs = 0
-    for (i in textdoc.readLines()) {
-        numberList = (numberList + i.replace(Regex("[^0-9]"), " ").trim()) as MutableList<String>
-        nameList = (nameList + i.replace(Regex("[ 0-9]"), " ").trim()) as MutableList<String>
-        while (vs != numberList.size) {
-            stringList += numberList[vs].split(" ").filter { p -> p != "" }
-            vs += 1
-        }
-    }
-
-//using the line size,
     var d = -1
     val teamScore = mutableMapOf<String, Int>()
     val listSize = textdoc.readLines().size
     var list4 = mutableListOf<Int>()
     var list2 = mutableListOf<Pair<Int,Int>>()
     var point = mutableListOf<Int>()
+    var sd = 0
+    var vs = 0
+
     while (d != listSize - 1){
 
+        if (sd == 0){//вынимает все, кроме алфавитов и все, кроме цифр и удаляет сгенерированный пробел
+            for (i in textdoc.readLines()) {
+
+                numberList = (numberList + i.replace(Regex("[^0-9]"), " ").trim()) as MutableList<String>
+                nameList = (nameList + i.replace(Regex("[ 0-9]"), " ").trim()) as MutableList<String>
+                while (vs != numberList.size) {
+                    stringList += numberList[vs].split(" ").filter { p -> p != "" }
+                    vs += 1
+                }
+            }
+            sd += 1
+        }
 
         fun kek(x: Int, y:Int): Pair<Int,Int> {
             if(x != y) {
