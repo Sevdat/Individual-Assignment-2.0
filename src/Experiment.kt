@@ -13,6 +13,7 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
     }
     println("nameList----------------= $nameList")
     println("numberList--------------= $numberList")
+
     var vs = 0
     var kes = mutableListOf<List<String>>()
     for (i in numberList) {
@@ -38,6 +39,7 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
     var list3 = mutableListOf<Int>()
     var list4 = mutableListOf<Int>()
     var point = mutableListOf<Int>()
+    val teamScore = mutableMapOf<String, Int>()
     while (d != kes.size - 1){
         d += 1
         var list2 = mutableListOf<Pair<Int,Int>>()
@@ -47,7 +49,6 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
         }
         for ((q, w) in list2.filter { i -> i != Pair(-1,-1)}) {
             when {
-
                 (q > w) -> point.add(3)
                 (q < w) -> point.add(0)
                 else -> point.add(1)
@@ -58,17 +59,9 @@ fun kek(x: Int, y:Int): Pair<Int,Int> {
         list2.clear()
         point.clear()
         f = -1
+
+        teamScore[nameList[d]] = list4[d]
     }
-    println(list4)
-
-
-        val teamScore = mutableMapOf<String, Int>()
-        var r = -1
-        while (r != kes.size - 1) {
-            r += 1
-            teamScore[nameList[r]] = list4[r]
-
-        }
         println("teamScore---------------= $teamScore")
     return teamScore
 }
