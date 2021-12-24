@@ -3,6 +3,21 @@ import java.io.File
 fun asf1(textdoc:File):MutableMap<String,Int> {
 
 //вынимает все, кроме алфавитов и все, кроме цифр и удаляет сгенерированный пробел
+    var numberList = mutableListOf<String>()
+    var nameList = mutableListOf<String>()
+    var kes1 = mutableListOf<List<String>>()
+    var vs = 0
+    for (i in textdoc.readLines()) {
+        numberList = (numberList + i.replace(Regex("[^0-9]"), " ").trim()) as MutableList<String>
+        nameList = (nameList + i.replace(Regex("[ 0-9]"), " ").trim()) as MutableList<String>
+        while (vs != numberList.size) {
+            kes1 += numberList[vs].split(" ").filter { p -> p != "" }
+            vs += 1
+        }
+    }
+    println("nameList----------------= $nameList")
+    println("numberList--------------= $numberList")
+    println("kes1--------------------= $kes1")
 
 //using the line size,
     var d = -1
@@ -10,22 +25,6 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
     val teamScore = mutableMapOf<String, Int>()
 
     while (d != textdoc.readLines().size - 1){
-
-        var numberList = mutableListOf<String>()
-        var nameList = mutableListOf<String>()
-        var kes1 = mutableListOf<List<String>>()
-        var vs = 0
-        for (i in textdoc.readLines()) {
-            numberList = (numberList + i.replace(Regex("[^0-9]"), " ").trim()) as MutableList<String>
-            nameList = (nameList + i.replace(Regex("[ 0-9]"), " ").trim()) as MutableList<String>
-            while (vs != numberList.size) {
-                kes1 += numberList[vs].split(" ").filter { p -> p != "" }
-                vs += 1
-            }
-        }
-        println("nameList----------------= $nameList")
-        println("numberList--------------= $numberList")
-        println("kes1--------------------= $kes1")
 
         fun kek(x: Int, y:Int): Pair<Int,Int> {
             if(x != y) {
