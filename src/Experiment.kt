@@ -14,7 +14,7 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
             while (d != listSize) {
                 stringList += numberList[d].split(" ").filter { p -> p != "" }.map { it.toInt() }
                 when {
-                    stringList[d][d] != 0 -> throw IllegalArgumentException("Diagonal 0 error")
+                    stringList[d][d] != 0 -> throw IllegalArgumentException("Diagonal 0 Error")
                     stringList[d].size != listSize -> throw IllegalArgumentException("Values not in Square Shape")
                     nameList.size != listSize -> throw IllegalArgumentException("Names not in Square Shape")
                 }
