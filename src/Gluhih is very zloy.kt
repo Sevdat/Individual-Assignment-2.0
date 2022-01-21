@@ -1,4 +1,4 @@
-//Int version
+//Int version single loop
  fun lol(sev: Int): String {
 
     val map = mutableMapOf(
@@ -8,35 +8,65 @@
         6 to "fgedc ", 7 to "fabc ",
         8 to "abcdefg ", 9 to "abfgc ")
 
-    var old = sev
-    var new = 0
-    var digit = 0
-    while (old != 0) {
-        digit += 1
-        val num = old % 10
-        new = new * 10 + num
-        old /= 10
-    }
-
-    var z = 1
-    var u = 0
-    var c = 0
-    var sus = ""
+    var digit = 1
+    var divide = 1
+    var substract = 0
+    var collect = ""
+    var gather = ""
             while (digit != 0) {
-             val t = (new + c)
-             val r = (t / z) % 10
+                val r = ((sev + substract) / divide) % 10
+                collect += map[r]
+                gather = collect + gather
 
+                divide *= 10
+               val remainder = sev % divide
+                substract = -remainder
 
-                z *= 10
-                u += new % z
-                c -= c + u
-                sus += map[r]
-                u -= u
-                digit -= 1
+                collect = ""
+                 digit = substract + sev
             }
-    println(sus)
-    return sus
+    println(gather)
+    return gather
     }
+////Int version
+//fun lol(sev: Int): String {
+//
+//    val map = mutableMapOf(
+//        0 to "abcdef ", 1 to "ef ",
+//        2 to "abged ", 3 to "abgcd ",
+//        4 to "fgbc ", 5 to "afgcd ",
+//        6 to "fgedc ", 7 to "fabc ",
+//        8 to "abcdefg ", 9 to "abfgc ")
+//
+//    var old = sev
+//    var new = 0
+//    var digit = 0
+//    while (old != 0) {
+//        digit += 1
+//        val num = old % 10
+//        new = new * 10 + num
+//        old /= 10
+//    }
+//
+//    var z = 1
+//    var u = 0
+//    var c = 0
+//    var sus = ""
+//    while (digit != 0) {
+//        val t = (new + c)
+//        val r = (t / z) % 10
+//
+//
+//        z *= 10
+//        u += new % z
+//        c -= c + u
+//        sus += map[r]
+//        u -= u
+//        digit -= 1
+//    }
+//    println(sus)
+//    return sus
+//}
 //q != 0||
 //q != 1|| q != 2 || q != 3 || q != 4 || q != 5 || q != 6 || q != 7 || q != 8 || q != 9 ||
 //q != 1|| q != -2 || q != -3 || q != -4 || q != -5 || q != -6 || q != -7 || q != -8 || q != -9
