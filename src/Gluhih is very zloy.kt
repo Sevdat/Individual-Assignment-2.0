@@ -1,24 +1,69 @@
-//couldn't write злой in russian because of kotlin error. I am now sad
- fun lol(n: Int): String {
-    val x = n.toString().split("").filter { e -> e != "" }.map { it.toInt() }
-        val map = mutableMapOf(
-            0 to "abcdef ", 1 to "ef ",
-            2 to "abged ", 3 to "abgcd ",
-            4 to "fgbc ", 5 to "afgcd ",
-            6 to "fgedc ", 7 to "fabc ",
-            8 to "abcdefg ", 9 to "abfgc ")
+//Int version
+ fun lol(sev: Int): String {
 
-    var k = 0
-    var list = ""
-    while (k != x.size) {
-        for ((i, e) in map) {
-            if (i == x[k]) list += e
-        }
-        k += 1
+    val map = mutableMapOf(
+        0 to "abcdef ", 1 to "ef ",
+        2 to "abged ", 3 to "abgcd ",
+        4 to "fgbc ", 5 to "afgcd ",
+        6 to "fgedc ", 7 to "fabc ",
+        8 to "abcdefg ", 9 to "abfgc ")
+
+    var old = sev
+    var new = 0
+    var digit = 0
+    while (old != 0) {
+        digit += 1
+        val num = old % 10
+        new = new * 10 + num
+        old /= 10
     }
-    println(list)
-        return list
+
+    var z = 1
+    var u = 0
+    var c = 0
+    var sus = ""
+            while (digit != 0) {
+             val t = (new + c)
+             val r = (t / z) % 10
+
+
+                z *= 10
+                u += new % z
+                c -= c + u
+                sus += map[r]
+                u -= u
+                digit -= 1
+            }
+    println(sus)
+    return sus
     }
+//q != 0||
+//q != 1|| q != 2 || q != 3 || q != 4 || q != 5 || q != 6 || q != 7 || q != 8 || q != 9 ||
+//q != 1|| q != -2 || q != -3 || q != -4 || q != -5 || q != -6 || q != -7 || q != -8 || q != -9
+
+////couldn't write злой in russian because of kotlin error. I am now sad
+//
+// fun lol(n: Int): String {
+//    val x = n.toString().split("").filter { e -> e != "" }.map { it.toInt() }
+//        val map = mutableMapOf(
+//            0 to "abcdef ", 1 to "ef ",
+//            2 to "abged ", 3 to "abgcd ",
+//            4 to "fgbc ", 5 to "afgcd ",
+//            6 to "fgedc ", 7 to "fabc ",
+//            8 to "abcdefg ", 9 to "abfgc ")
+//
+//    var k = 0
+//    var list = ""
+//    while (k != x.size) {
+//        for ((i, e) in map) {
+//            if (i == x[k]) list += e
+//        }
+//        k += 1
+//    }
+//    println(list)
+//        return list
+//    }
+
 // fun lol(n: Int): String {
 //        val x = n.toString().split("").filter { e -> e != "" }.map { it.toInt() }
 //        var list = ""
