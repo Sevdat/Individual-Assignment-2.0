@@ -11,7 +11,7 @@ fun lol(sev: Int): String {
     var divide = 1
     var gather = ""
     while (sev != sev % divide) {
-        gather = map[(sev / divide) % 10] + gather
+        gather = map[sev / divide % 10] + gather
         divide *= 10
     }
     println(gather)
