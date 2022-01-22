@@ -1,5 +1,5 @@
-//Int version single loop
- fun lol(sev: Int): String {
+//Int version + single loop + 2 var + less lines = gucci code
+fun lol(sev: Int): String {
 
     val map = mutableMapOf(
         0 to "abcdef ", 1 to "ef ",
@@ -8,26 +8,47 @@
         6 to "fgedc ", 7 to "fabc ",
         8 to "abcdefg ", 9 to "abfgc ")
 
-    var digit = 1
     var divide = 1
-    var substract = 0
-    var collect = ""
     var gather = ""
-            while (digit != 0) {
-                val r = ((sev + substract) / divide) % 10
-                collect += map[r]
-                gather = collect + gather
-
-                divide *= 10
-               val remainder = sev % divide
-                substract = -remainder
-
-                collect = ""
-                 digit = substract + sev
-            }
+    while (sev - sev % divide != 0) {
+        val r = (sev / divide) % 10
+        gather = map[r] + gather
+        divide *= 10
+    }
     println(gather)
     return gather
-    }
+}
+
+////Int version single loop
+// fun lol(sev: Int): String {
+//
+//    val map = mutableMapOf(
+//        0 to "abcdef ", 1 to "ef ",
+//        2 to "abged ", 3 to "abgcd ",
+//        4 to "fgbc ", 5 to "afgcd ",
+//        6 to "fgedc ", 7 to "fabc ",
+//        8 to "abcdefg ", 9 to "abfgc ")
+//
+//    var digit = 1
+//    var divide = 1
+//    var substract = 0
+//    var collect = ""
+//    var gather = ""
+//            while (digit != 0) {
+//                val r = ((sev + substract) / divide) % 10
+//                collect += map[r]
+//                gather = collect + gather
+//
+//                divide *= 10
+//               val remainder = sev % divide
+//                substract = -remainder
+//
+//                collect = ""
+//                 digit = substract + sev
+//            }
+//    println(gather)
+//    return gather
+//    }
 ////Int version
 //fun lol(sev: Int): String {
 //
