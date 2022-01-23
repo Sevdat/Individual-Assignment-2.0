@@ -2,27 +2,28 @@ import java.io.File
 
 fun asf1(textdoc:File):MutableMap<String,Int> {
 
+    val readfile = textdoc.readLines()
     val listSize = textdoc.readLines().size
-    var numberList = mutableListOf<String>()
-    var nameList = mutableListOf<String>()
+    val nameList = mutableListOf<String>()
     val stringList = mutableListOf<List<Int>>()
     var d = 0
-
-        for (i in textdoc.readLines()) {
-            numberList = (numberList + i.replace(Regex("[^0-9]"), " ").trim()) as MutableList<String>
-            nameList = (nameList + i.replace(Regex("[ 0-9]"), " ").trim()) as MutableList<String>
-        }
-
             while (d != listSize) {
-                stringList += numberList[d].split(" ").filter { p -> p != "" }.map { it.toInt() }
+                stringList += readfile[d].replace(Regex("[^0-9]"), " ")
+                    .trim().split(" ").filter { p -> p != "" }.map { it.toInt() }
+                nameList += readfile[d].replace(Regex("[ 0-9]"), " ")
+                    .trim().split(" ")
                 when {
                     stringList[d][d] != 0 -> throw IllegalArgumentException("Diagonal 0 Error")
                     stringList[d].size != listSize -> throw IllegalArgumentException("Values not in Square Shape")
-                    nameList.size != listSize -> throw IllegalArgumentException("Names not in Square Shape")
+
                 }
                 d += 1
+                if (d == listSize){
+                    when {
+                        nameList.size != listSize -> throw IllegalArgumentException("Names not in Square Shape")
+                    }
+                }
             }
-
     d = 0
     val teamScore = mutableMapOf<String, Int>()
     var point = mutableListOf<Int>()
