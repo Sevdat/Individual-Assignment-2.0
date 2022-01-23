@@ -26,7 +26,7 @@ fun asf1(textdoc:File):MutableMap<String,Int> {
             }
     d = 0
     val teamScore = mutableMapOf<String, Int>()
-    var point = mutableListOf<Int>()
+    val point = mutableListOf<Int>()
             while (d != listSize){
                 var f = 0
                 while (f != listSize) {
