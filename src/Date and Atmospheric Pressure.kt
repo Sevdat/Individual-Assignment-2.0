@@ -20,7 +20,7 @@ fun foo(inputName: String, query: String, outputName: String) {
             if (qr[2] == "prev") {
                 if (qr[1] == "<") {
                     keko1 = e
-                    if (keko1 >= keko) {
+                    if (keko1 <= keko) {
 
                         print("$i: $e, ")
                         keko = e
@@ -65,12 +65,12 @@ fun foo(inputName: String, query: String, outputName: String) {
                     }
                 }
                 if (qr[1] == "<" && qr[3] == ">") {
-                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+                    if (e <= qr[0].toInt() && e >= qr[4].toInt()) {
                         print("$i: $e, ")
                     }
                 }
                 if (qr[1] == ">" && qr[3] == "<") {
-                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+                    if (e >= qr[0].toInt() && e <= qr[4].toInt()) {
                         print("$i: $e, ")
                     }
                 }
