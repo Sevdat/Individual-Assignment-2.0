@@ -10,15 +10,37 @@ fun foo(inputName: String, query: String, outputName: String) {
         list1 = mutableListOf("")
         n += 1
     }
-    println(list2)
     n = 0
-    var qr = query.split(' ')
-
+    val qr = query.split(' ')
+    var keko = 0
+    var keko1 = 0
     while (n != list2.size) {
         for ((i, e) in list2[n]) {
+//"x < prev"
+            if (qr[2] == "prev") {
+                if (qr[1] == "<") {
+                    keko1 = e
+                    if (keko1 >= keko) {
 
-            if (qr.size == 3 && qr[2] != "less") {
+                        print("$i: $e, ")
+                        keko = e
+                        keko1 += keko
 
+                    }
+                }
+                if (qr[1] == ">") {
+                    keko1 = e
+                    if (keko1 >= keko) {
+
+                        print("$i: $e, ")
+                        keko = e
+                        keko1 += keko
+
+                    }
+                }
+            }
+//"x < 745"
+            if (qr.size == 3 && qr[2] != "prev") {
                 if (qr[1] == "<") {
                     if (e <= qr[2].toInt()) {
                         print("$i: $e, ")
@@ -29,11 +51,32 @@ fun foo(inputName: String, query: String, outputName: String) {
                         print("$i: $e, ")
                     }
                 }
-
             }
+//"750 > x < 740"
+            if (qr.size == 5) {
+                if (qr[1] == "<" && qr[3] == "<") {
+                    if (e <= qr[0].toInt() && e <= qr[4].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+                if (qr[1] == ">" && qr[3] == ">") {
+                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+                if (qr[1] == "<" && qr[3] == ">") {
+                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+                if (qr[1] == ">" && qr[3] == "<") {
+                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+            }
+
         }
-
-
         n += 1
     }
 }
