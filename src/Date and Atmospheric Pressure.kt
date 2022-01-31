@@ -1,85 +1,114 @@
-fun foo(inputName: String, query: String, outputName: String) {
+import java.io.File
+
+
+fun foo(inputName: String, query: String, outputName: String):String {
+
     var n = 0
     var list0 = inputName.split(",")
-    var list1 = mutableListOf("")
+    var list1 = mutableListOf<String>()
     var list2 = mutableListOf<List<Pair<String,Int>>>()
-
-    while (n != list0.size){
+    while (n != list0.size - 1){
         list1 += list0[n].split(":")
-        list2 += mutableListOf(Pair(list1[1], list1[2].filter { e -> e != ' ' }.toInt()))
-        list1 = mutableListOf("")
+        list2 += mutableListOf(Pair(list1[0], list1[1].filter { e -> e != ' ' }.toInt()))
+        list1.clear()
         n += 1
     }
+
     n = 0
     val qr = query.split(' ')
     var keko = 0
     var keko1 = 0
     while (n != list2.size) {
-        for ((i, e) in list2[n]) {
-//"x < prev"
-            if (qr[2] == "prev") {
-                if (qr[1] == "<") {
-                    keko1 = e
-                    if (keko1 <= keko) {
 
-                        print("$i: $e, ")
-                        keko = e
-                        keko1 += keko
-
-                    }
-                }
-                if (qr[1] == ">") {
-                    keko1 = e
-                    if (keko1 >= keko) {
-
-                        print("$i: $e, ")
-                        keko = e
-                        keko1 += keko
-
-                    }
-                }
-            }
-//"x < 745"
-            if (qr.size == 3 && qr[2] != "prev") {
-                if (qr[1] == "<") {
-                    if (e <= qr[2].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-                if (qr[1] == ">") {
-                    if (e >= qr[2].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-            }
-//"750 > x < 740"
-            if (qr.size == 5) {
-                if (qr[1] == "<" && qr[3] == "<") {
-                    if (e <= qr[0].toInt() && e <= qr[4].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-                if (qr[1] == ">" && qr[3] == ">") {
-                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-                if (qr[1] == "<" && qr[3] == ">") {
-                    if (e <= qr[0].toInt() && e >= qr[4].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-                if (qr[1] == ">" && qr[3] == "<") {
-                    if (e >= qr[0].toInt() && e <= qr[4].toInt()) {
-                        print("$i: $e, ")
-                    }
-                }
-            }
-
-        }
         n += 1
+
     }
+    return " "
 }
+
+//fun foo1(inputName: String, query: String, outputName: String) {
+//    var n = 0
+//    var list0 = inputName.split(",")
+//    var list1 = mutableListOf("")
+//    var list2 = mutableListOf<List<Pair<String,Int>>>()
+//
+//    while (n != list0.size){
+//        list1 += list0[n].split(":")
+//        list2 += mutableListOf(Pair(list1[1], list1[2].filter { e -> e != ' ' }.toInt()))
+//        list1 = mutableListOf("")
+//        n += 1
+//    }
+//    n = 0
+//    val qr = query.split(' ')
+//    var keko = 0
+//    var keko1 = 0
+//    while (n != list2.size) {
+//        for ((i, e) in list2[n]) {
+////"x < prev"
+//            if (qr[2] == "prev") {
+//                if (qr[1] == "<") {
+//                    keko1 = e
+//                    if (keko1 <= keko) {
+//
+//                        print("$i: $e, ")
+//                        keko = e
+//                        keko1 += keko
+//
+//                    }
+//                }
+//                if (qr[1] == ">") {
+//                    keko1 = e
+//                    if (keko1 >= keko) {
+//
+//                        print("$i: $e, ")
+//                        keko = e
+//                        keko1 += keko
+//
+//                    }
+//                }
+//            }
+////"x < 745"
+//            if (qr.size == 3 && qr[2] != "prev") {
+//                if (qr[1] == "<") {
+//                    if (e <= qr[2].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//                if (qr[1] == ">") {
+//                    if (e >= qr[2].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//            }
+////"750 > x < 740"
+//            if (qr.size == 5) {
+//                if (qr[1] == "<" && qr[3] == "<") {
+//                    if (e <= qr[0].toInt() && e <= qr[4].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//                if (qr[1] == ">" && qr[3] == ">") {
+//                    if (e >= qr[0].toInt() && e >= qr[4].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//                if (qr[1] == "<" && qr[3] == ">") {
+//                    if (e <= qr[0].toInt() && e >= qr[4].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//                if (qr[1] == ">" && qr[3] == "<") {
+//                    if (e >= qr[0].toInt() && e <= qr[4].toInt()) {
+//                        print("$i: $e, ")
+//                    }
+//                }
+//            }
+//
+//        }
+//        n += 1
+//    }
+//
+//}
 
 
 
@@ -95,7 +124,7 @@ fun foo(inputName: String, query: String, outputName: String) {
 //  14.02: 742       | {739 < 742} !(14.02: 742) | |            14.02: 742, | |                  14.02: 742, |
 
 
-fun main0(){
+fun main(){
     var list0 = listOf(
         "01.01: 755",
         "05.01: 758",
