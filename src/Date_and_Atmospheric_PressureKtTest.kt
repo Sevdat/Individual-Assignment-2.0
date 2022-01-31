@@ -18,6 +18,6 @@ internal class Date_and_Atmospheric_PressureKtTest {
          "5.02: 745, " +
          "10.02: 739, " +
          "14.02: 742",
-            "x < 745", "t")
+            "e < 745", "t")
     }
 }

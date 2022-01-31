@@ -1,7 +1,6 @@
 fun foo(inputName: String, query: String, outputName: String) {
     var n = 0
     var list0 = inputName.split(",")
-    println(list0)
     var list1 = mutableListOf("")
     var list2 = mutableListOf<List<Pair<String,Int>>>()
 
@@ -13,14 +12,28 @@ fun foo(inputName: String, query: String, outputName: String) {
     }
     println(list2)
     n = 0
-    var x = 745
-    var list3 = mutableListOf<List<Pair<String,String>>>()
+    var qr = query.split(' ')
+
     while (n != list2.size) {
         for ((i, e) in list2[n]) {
-            if (e <= x) {
-                println("$i: $e")
+
+            if (qr.size == 3 && qr[2] != "less") {
+
+                if (qr[1] == "<") {
+                    if (e <= qr[2].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+                if (qr[1] == ">") {
+                    if (e >= qr[2].toInt()) {
+                        print("$i: $e, ")
+                    }
+                }
+
             }
         }
+
+
         n += 1
     }
 }
