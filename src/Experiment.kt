@@ -1,6 +1,6 @@
 import java.io.File
 
-fun asf1(textdoc:File):MutableMap<String,Int> {
+fun asf1(textdoc: File):MutableMap<String,Int> {
 
     val readfile = textdoc.readLines()
     val listSize = textdoc.readLines().size
