@@ -1,0 +1,23 @@
+import org.junit.jupiter.api.Test
+
+import org.junit.jupiter.api.Assertions.*
+import java.io.File
+
+internal class Date_and_Atmospheric_PressureKtTest {
+
+    @Test
+    fun foo() {
+ foo(
+     "01.01: 755, " +
+         "05.01: 758, " +
+         "12.01: 765, " +
+         "20.01: 768, " +
+         "24.01: 763, " +
+         "30.01: 756, " +
+         "2.02: 752, " +
+         "5.02: 745, " +
+         "10.02: 739, " +
+         "14.02: 742",
+            "x < 745", "t")
+    }
+}
