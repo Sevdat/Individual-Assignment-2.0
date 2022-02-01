@@ -13,17 +13,18 @@ fun foo(inputName: String, query: String, outputName: String):String {
 
     n = 0
     val stringSplit = query.split(" ")
-    val endValue = stringSplit.last().toInt()
-    val startValue = stringSplit.first().toInt()
     val sign = stringSplit[1]
     val prev = stringSplit.last()
     val datePressure = mutableListOf<String>()
-
+    var j = 0
     while (n != pairIntString.size) {
 
         for ((i,e) in pairIntString[n]) {
 
+
             if (stringSplit.size == 5) {
+                val endValue = stringSplit.last().toInt()
+                val startValue = stringSplit.first().toInt()
                 when (query.split(" ")[1]+ query.split(" ")[3]) {
                     ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
                     "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e" }
@@ -33,11 +34,22 @@ fun foo(inputName: String, query: String, outputName: String):String {
             }
 
             if (prev != "prev" && stringSplit.size == 3) {
+                val endValue = stringSplit.last().toInt()
                 when (sign) {
                     ">" -> if (e >= endValue) { datePressure += "$i: $e" }
                     "<" -> if (e <= endValue) { datePressure += "$i: $e" }
                 }
             }
+
+            if (prev == "prev"){
+                var f = e
+                when (sign) {
+                    ">" -> if (e > j) { datePressure += "$i: $e" }
+                    "<" -> if (e < j) { datePressure += "$i: $e" }
+                }
+                j = e
+            }
+
         }
 
 
