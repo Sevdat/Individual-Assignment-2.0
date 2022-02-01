@@ -6,7 +6,8 @@ fun foo(inputName: String, query: String, outputName: String): MutableList<Strin
     val pairIntString = mutableListOf<List<Pair<String,Int>>>()
     while (n != splitComma.size - 1){
         listString += splitComma[n].split(":")
-        pairIntString += mutableListOf(Pair(listString[0], listString[1].filter { e -> e != ' ' }.toInt()))
+        pairIntString +=
+            mutableListOf(Pair(listString[0].filter { e -> e != ' ' }, listString[1].filter { e -> e != ' ' }.toInt()))
         listString.clear()
         n += 1
     }
