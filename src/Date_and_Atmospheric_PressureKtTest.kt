@@ -10,7 +10,7 @@ internal class Date_and_Atmospheric_PressureKtTest {
         " ",
         foo(
             File("src/Date and Atmo.txt").readLines().joinToString(),
-            "e < 745",
+            "740 > e < 750",
             " "
         )
     )

@@ -1,9 +1,9 @@
 fun foo(inputName: String, query: String, outputName: String):String {
 
     var n = 0
-    var splitComma = inputName.split(",")
-    var listString = mutableListOf<String>()
-    var pairIntString = mutableListOf<List<Pair<String,Int>>>()
+    val splitComma = inputName.split(",")
+    val listString = mutableListOf<String>()
+    val pairIntString = mutableListOf<List<Pair<String,Int>>>()
     while (n != splitComma.size - 1){
         listString += splitComma[n].split(":")
         pairIntString += mutableListOf(Pair(listString[0], listString[1].filter { e -> e != ' ' }.toInt()))
@@ -12,20 +12,34 @@ fun foo(inputName: String, query: String, outputName: String):String {
     }
 
     n = 0
-    var stringSplit = query.split(" ")
-    var endValue = stringSplit.last().toInt()
-    var sign = stringSplit[1]
-    var prev = stringSplit.last()
-    var datePressure = mutableListOf<String>()
+    val stringSplit = query.split(" ")
+    val endValue = stringSplit.last().toInt()
+    val startValue = stringSplit.first().toInt()
+    val sign = stringSplit[1]
+    val prev = stringSplit.last()
+    val datePressure = mutableListOf<String>()
+
     while (n != pairIntString.size) {
 
-        for ((i,e) in pairIntString[n]){
+        for ((i,e) in pairIntString[n]) {
 
-           when(sign) {
-                    ">" -> if(e >= endValue){datePressure += "$i: $e"}
-                    "<" -> if(e <= endValue){datePressure += "$i: $e"}
+            if (stringSplit.size == 5) {
+                when (query.split(" ")[1]+ query.split(" ")[3]) {
+                    ">>" -> if (e >= startValue || e >= endValue) { datePressure += "$i: $e" }
+                    "<<" -> if (e <= startValue || e <= endValue) { datePressure += "$i: $e" }
+                    "<>" -> if (e >= startValue || e >= endValue) { datePressure += "$i: $e" }
+                    "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e" }
                 }
+            }
+
+            if (prev != "prev" && stringSplit.size == 3) {
+                when (sign) {
+                    ">" -> if (e >= endValue) { datePressure += "$i: $e" }
+                    "<" -> if (e <= endValue) { datePressure += "$i: $e" }
+                }
+            }
         }
+
 
         n += 1
     }
@@ -158,43 +172,43 @@ fun foo(inputName: String, query: String, outputName: String):String {
 //  14.02: 742       | {739 < 742} !(14.02: 742) | |            14.02: 742, | |                  14.02: 742, |
 
 
-fun main(){
-    var list0 = listOf(
-        "01.01: 755",
-        "05.01: 758",
-        "12.01: 765",
-        "20.01: 768",
-        "24.01: 763",
-        "30.01: 756",
-        "2.02: 752",
-        "5.02: 745",
-        "10.02: 739",
-        "14.02: 742"
-    )
-
-    var n = 0
-    var list1 = mutableListOf("")
-    var list2 = mutableListOf<List<Pair<String,Int>>>()
-
-    while (n != list0.size){
-        list1 += list0[n].split(":")
-        list2 += mutableListOf(Pair(list1[1], list1[2].filter { e -> e != ' ' }.toInt()))
-        list1 = mutableListOf("")
-        n += 1
-    }
-    println(list2)
-    n = 0
-    var x = 745
-    var list3 = mutableListOf<List<Pair<String,String>>>()
-    while (n != list2.size) {
-        for ((i, e) in list2[n]) {
-            if (e <= x) {
-                println("$i: $e")
-            }
-        }
-        n += 1
-    }
-}
+//fun main(){
+//    var list0 = listOf(
+//        "01.01: 755",
+//        "05.01: 758",
+//        "12.01: 765",
+//        "20.01: 768",
+//        "24.01: 763",
+//        "30.01: 756",
+//        "2.02: 752",
+//        "5.02: 745",
+//        "10.02: 739",
+//        "14.02: 742"
+//    )
+//
+//    var n = 0
+//    var list1 = mutableListOf("")
+//    var list2 = mutableListOf<List<Pair<String,Int>>>()
+//
+//    while (n != list0.size){
+//        list1 += list0[n].split(":")
+//        list2 += mutableListOf(Pair(list1[1], list1[2].filter { e -> e != ' ' }.toInt()))
+//        list1 = mutableListOf("")
+//        n += 1
+//    }
+//    println(list2)
+//    n = 0
+//    var x = 745
+//    var list3 = mutableListOf<List<Pair<String,String>>>()
+//    while (n != list2.size) {
+//        for ((i, e) in list2[n]) {
+//            if (e <= x) {
+//                println("$i: $e")
+//            }
+//        }
+//        n += 1
+//    }
+//}
 
 /**
 Севдат, отправляю вам задание на повторный зачёт.
