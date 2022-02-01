@@ -1,7 +1,7 @@
 import java.io.File
 
 fun foo(inputName: String, query: String, outputName: String) {
-    var y = File(inputName).readLines().joinToString()
+    var y = File(inputName).readLines().joinToString().replace(",,",",")
     var n = 0
     val splitComma = y.split(",")
     val listString = mutableListOf<String>()
