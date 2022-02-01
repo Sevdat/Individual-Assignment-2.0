@@ -1,7 +1,9 @@
-fun foo(inputName: String, query: String, outputName: String): MutableList<String> {
+import java.io.File
 
+fun foo(inputName: String, query: String, outputName: String) {
+    var y = File(inputName).readLines().joinToString()
     var n = 0
-    val splitComma = inputName.split(",")
+    val splitComma = y.split(",")
     val listString = mutableListOf<String>()
     val pairIntString = mutableListOf<List<Pair<String,Int>>>()
     while (n != splitComma.size - 1){
@@ -16,7 +18,7 @@ fun foo(inputName: String, query: String, outputName: String): MutableList<Strin
     val stringSplit = query.split(" ")
     val sign = stringSplit[1]
     val prev = stringSplit.last()
-    val datePressure = mutableListOf<String>()
+    var datePressure = mutableListOf<String>()
     var j = 0
     while (n != pairIntString.size) {
 
@@ -55,8 +57,8 @@ fun foo(inputName: String, query: String, outputName: String): MutableList<Strin
 
         n += 1
     }
-    println(datePressure)
-    return datePressure
+      val x = File(outputName).printWriter().use { e -> e.println(datePressure.joinToString()) }
+    println(datePressure.joinToString())
 }
 
 //        for ((i,e) in pairIntString[n]){
