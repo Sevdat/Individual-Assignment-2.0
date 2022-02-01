@@ -13,17 +13,18 @@ fun foo(inputName: String, query: String, outputName: String):String {
 
     n = 0
     var stringSplit = query.split(" ")
-    var sign = stringSplit[1]
     var endValue = stringSplit.last().toInt()
+    var sign = stringSplit[1]
     var prev = stringSplit.last()
     var datePressure = mutableListOf<String>()
     while (n != pairIntString.size) {
 
         for ((i,e) in pairIntString[n]){
 
-           datePressure += "$i: $e"
-
-
+           when(sign) {
+                    ">" -> if(e >= endValue){datePressure += "$i: $e"}
+                    "<" -> if(e <= endValue){datePressure += "$i: $e"}
+                }
         }
 
         n += 1

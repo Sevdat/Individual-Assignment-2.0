@@ -6,7 +6,14 @@ import java.io.File
 internal class Date_and_Atmospheric_PressureKtTest {
 
     @Test
-    fun foo() {kotlin.test.assertEquals(" ", foo(File("src/Date and Atmo.txt").readLines().joinToString(),"e < 745"," "))
+    fun foo() {kotlin.test.assertEquals(
+        " ",
+        foo(
+            File("src/Date and Atmo.txt").readLines().joinToString(),
+            "e < 745",
+            " "
+        )
+    )
 //        foo(
 //     "01.01: 755, " +
 //         "05.01: 758, " +
