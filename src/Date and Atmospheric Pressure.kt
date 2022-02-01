@@ -28,7 +28,7 @@ fun foo(inputName: String, query: String, outputName: String) {
             if (stringSplit.size == 5) {
                 val endValue = stringSplit.last().toInt()
                 val startValue = stringSplit.first().toInt()
-                when (query.split(" ")[1]+ query.split(" ")[3]) {
+                when (stringSplit[1]+ stringSplit[3]) {
                     ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
                     "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e" }
                     "<>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
