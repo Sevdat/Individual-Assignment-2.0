@@ -1,30 +1,63 @@
-import java.io.File
-
-
 fun foo(inputName: String, query: String, outputName: String):String {
 
     var n = 0
-    var list0 = inputName.split(",")
-    var list1 = mutableListOf<String>()
-    var list2 = mutableListOf<List<Pair<String,Int>>>()
-    while (n != list0.size - 1){
-        list1 += list0[n].split(":")
-        list2 += mutableListOf(Pair(list1[0], list1[1].filter { e -> e != ' ' }.toInt()))
-        list1.clear()
+    var splitComma = inputName.split(",")
+    var listString = mutableListOf<String>()
+    var pairIntString = mutableListOf<List<Pair<String,Int>>>()
+    while (n != splitComma.size - 1){
+        listString += splitComma[n].split(":")
+        pairIntString += mutableListOf(Pair(listString[0], listString[1].filter { e -> e != ' ' }.toInt()))
+        listString.clear()
         n += 1
     }
 
     n = 0
-    val qr = query.split(' ')
-    var keko = 0
-    var keko1 = 0
-    while (n != list2.size) {
+    var stringSplit = query.split(" ")
+    var sign = stringSplit[1]
+    var endValue = stringSplit.last().toInt()
+    var prev = stringSplit.last()
+    var datePressure = mutableListOf<String>()
+    while (n != pairIntString.size) {
+
+        for ((i,e) in pairIntString[n]){
+
+           datePressure += "$i: $e"
+
+
+        }
 
         n += 1
-
     }
+    println(datePressure)
     return " "
 }
+
+//        for ((i,e) in pairIntString[n]){
+//
+//            if (stringSplit.size == 5) {
+//            var org1 = query.split(" ")[1]
+//            var org2 = query.split(" ")[3]
+//
+//                when (org1 == "<" && org2 == "<") {
+//                    (e <= endValue) -> datePressure += "$i: $e"
+//                }
+//                when (org1 == "<" && org2 == "<") {
+//                    (e >= endValue) -> datePressure += "$i: $e"
+//                }
+//            }
+//
+//
+//            if (prev != "prev") {
+//                when (sign == "<") {
+//                    (e <= endValue) -> datePressure += "$i: $e"
+//                }
+//                when (sign == ">") {
+//                    (e >= endValue) -> datePressure += "$i: $e"
+//                }
+//            }
+//
+//
+//        }
 
 //fun foo1(inputName: String, query: String, outputName: String) {
 //    var n = 0
