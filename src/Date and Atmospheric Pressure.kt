@@ -25,9 +25,9 @@ fun foo(inputName: String, query: String, outputName: String):String {
 
             if (stringSplit.size == 5) {
                 when (query.split(" ")[1]+ query.split(" ")[3]) {
-                    ">>" -> if (e >= startValue || e >= endValue) { datePressure += "$i: $e" }
-                    "<<" -> if (e <= startValue || e <= endValue) { datePressure += "$i: $e" }
-                    "<>" -> if (e >= startValue || e >= endValue) { datePressure += "$i: $e" }
+                    ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
+                    "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e" }
+                    "<>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
                     "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e" }
                 }
             }
