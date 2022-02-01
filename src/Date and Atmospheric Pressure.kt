@@ -1,4 +1,4 @@
-fun foo(inputName: String, query: String, outputName: String):String {
+fun foo(inputName: String, query: String, outputName: String): MutableList<String> {
 
     var n = 0
     val splitComma = inputName.split(",")
@@ -55,7 +55,7 @@ fun foo(inputName: String, query: String, outputName: String):String {
         n += 1
     }
     println(datePressure)
-    return " "
+    return datePressure
 }
 
 //        for ((i,e) in pairIntString[n]){
