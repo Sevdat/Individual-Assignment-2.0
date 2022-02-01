@@ -5,11 +5,11 @@ fun foo(inputName: String, query: String, outputName: String) {
     var n = 0
     val splitComma = y.split(",")
     val listString = mutableListOf<String>()
-    val pairIntString = mutableListOf<List<Pair<String,Int>>>()
+    val pairIntString = mutableListOf<List<Pair<String,String>>>()
     while (n != splitComma.size - 1){
         listString += splitComma[n].split(":")
         pairIntString +=
-            mutableListOf(Pair(listString[0].filter { e -> e != ' ' }, listString[1].filter { e -> e != ' ' }.toInt()))
+            mutableListOf(Pair(listString[0].filter { e -> e != ' ' }, listString[1].filter { e -> e != ' ' }))
         listString.clear()
         n += 1
     }
@@ -19,16 +19,16 @@ fun foo(inputName: String, query: String, outputName: String) {
     val sign = stringSplit[1]
     val prev = stringSplit.last()
     var datePressure = mutableListOf<String>()
-    var j = 0
+    var j = ""
     while (n != pairIntString.size) {
 
         for ((i,e) in pairIntString[n]) {
 
 
             if (stringSplit.size == 5) {
-                val endValue = stringSplit.last().toInt()
-                val startValue = stringSplit.first().toInt()
-                when (stringSplit[1]+ stringSplit[3]) {
+                val endValue = stringSplit.last()
+                val startValue = stringSplit.first()
+                when (stringSplit[1] + stringSplit[3]) {
                     ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
                     "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e" }
                     "<>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
@@ -37,7 +37,7 @@ fun foo(inputName: String, query: String, outputName: String) {
             }
 
             if (prev != "prev" && stringSplit.size == 3) {
-                val endValue = stringSplit.last().toInt()
+                val endValue = stringSplit.last()
                 when (sign) {
                     ">" -> if (e >= endValue) { datePressure += "$i: $e" }
                     "<" -> if (e <= endValue) { datePressure += "$i: $e" }
