@@ -42,7 +42,6 @@ fun foo(inputName: String, query: String, outputName: String):String {
             }
 
             if (prev == "prev"){
-                var f = e
                 when (sign) {
                     ">" -> if (e > j) { datePressure += "$i: $e" }
                     "<" -> if (e < j) { datePressure += "$i: $e" }
