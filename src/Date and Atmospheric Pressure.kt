@@ -7,8 +7,7 @@ fun foo(inputName: String, query: String, outputName: String) {
     val pairIntString = mutableListOf<List<Pair<String,String>>>()
     while (n != data.size - 1){
         listString += data[n].split(":")
-        pairIntString +=
-            mutableListOf(Pair(listString[0].trim(), listString[1].trim()))
+        pairIntString += mutableListOf(Pair(listString[0].trim(), listString[1].trim()))
         listString.clear()
         n += 1
     }
