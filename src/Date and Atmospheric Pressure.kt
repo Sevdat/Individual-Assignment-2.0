@@ -1,13 +1,12 @@
 import java.io.File
 
 fun foo(inputName: String, query: String, outputName: String) {
-    var y = File(inputName).readLines().joinToString().replace(",,",",")
+    var data = File(inputName).readLines().joinToString().replace(",,",",").split(",")
     var n = 0
-    val splitComma = y.split(",")
     val listString = mutableListOf<String>()
     val pairIntString = mutableListOf<List<Pair<String,String>>>()
-    while (n != splitComma.size - 1){
-        listString += splitComma[n].split(":")
+    while (n != data.size - 1){
+        listString += data[n].split(":")
         pairIntString +=
             mutableListOf(Pair(listString[0].trim(), listString[1].trim()))
         listString.clear()
@@ -50,14 +49,77 @@ fun foo(inputName: String, query: String, outputName: String) {
                 j = e
             }
 
+
         }
 
 
         n += 1
     }
-      val x = File(outputName).printWriter().use { e -> e.println(datePressure.dropLast(2)) }
+
+    File(outputName).printWriter().use { e -> e.println(datePressure.dropLast(2)) }
     println(datePressure.dropLast(2))
 }
+
+//fun foo(inputName: String, query: String, outputName: String) {
+//    var y = File(inputName).readLines().joinToString()
+//    var n = 0
+//    val splitComma = y.split(",")
+//    val listString = mutableListOf<String>()
+//    val pairIntString = mutableListOf<List<Pair<String,Int>>>()
+//    while (n != splitComma.size - 1){
+//        listString += splitComma[n].split(":")
+//        pairIntString +=
+//            mutableListOf(Pair(listString[0].filter { e -> e != ' ' }, listString[1].filter { e -> e != ' ' }.toInt()))
+//        listString.clear()
+//        n += 1
+//    }
+//
+//    n = 0
+//    val stringSplit = query.split(" ")
+//    val sign = stringSplit[1]
+//    val prev = stringSplit.last()
+//    var datePressure = mutableListOf<String>()
+//    var j = 0
+//    while (n != pairIntString.size) {
+//
+//        for ((i,e) in pairIntString[n]) {
+//
+//
+//            if (stringSplit.size == 5) {
+//                val endValue = stringSplit.last().toInt()
+//                val startValue = stringSplit.first().toInt()
+//                when (stringSplit[1]+ stringSplit[3]) {
+//                    ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
+//                    "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e" }
+//                    "<>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e" }
+//                    "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e" }
+//                }
+//            }
+//
+//            if (prev != "prev" && stringSplit.size == 3) {
+//                val endValue = stringSplit.last().toInt()
+//                when (sign) {
+//                    ">" -> if (e >= endValue) { datePressure += "$i: $e" }
+//                    "<" -> if (e <= endValue) { datePressure += "$i: $e" }
+//                }
+//            }
+//
+//            if (prev == "prev"){
+//                when (sign) {
+//                    ">" -> if (e > j) { datePressure += "$i: $e" }
+//                    "<" -> if (e < j) { datePressure += "$i: $e" }
+//                }
+//                j = e
+//            }
+//
+//        }
+//
+//
+//        n += 1
+//    }
+//      val x = File(outputName).printWriter().use { e -> e.println(datePressure.joinToString()) }
+//    println(datePressure.joinToString())
+//}
 
 //        for ((i,e) in pairIntString[n]){
 //
