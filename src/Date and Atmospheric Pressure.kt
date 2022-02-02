@@ -1,7 +1,7 @@
 import java.io.File
 
 fun foo(inputName: String, query: String, outputName: String) {
-    var data = File(inputName).readLines().joinToString().replace(",,",",").split(",")
+    val data = File(inputName).readLines().joinToString().replace(",,",",").split(",")
     var n = 0
     val listString = mutableListOf<String>()
     val pairIntString = mutableListOf<List<Pair<String,String>>>()
@@ -29,7 +29,7 @@ fun foo(inputName: String, query: String, outputName: String) {
                 when (stringSplit[1] + stringSplit[3]) {
                     ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e, " }
                     "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e, " }
-                    "<>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e, " }
+                    "<>" -> if (e <= startValue && e >= endValue) { datePressure += "$i: $e, " }
                     "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e, " }
                 }
             }
