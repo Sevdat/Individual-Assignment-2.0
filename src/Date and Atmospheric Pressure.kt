@@ -23,7 +23,6 @@ fun foo(inputName: String, query: String, outputName: String) {
 
         for ((i,e) in pairIntString[n]) {
 
-
             if (stringSplit.size == 5) {
                 when (stringSplit[1] + stringSplit[3]) {
                     ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e, " }
@@ -31,16 +30,12 @@ fun foo(inputName: String, query: String, outputName: String) {
                     "<>" -> if (e <= startValue && e >= endValue) { datePressure += "$i: $e, " }
                     "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e, " }
                 }
-            }
-
-            if (endValue != "prev" && stringSplit.size == 3) {
+            } else if (endValue != "prev") {
                 when (sign) {
                     ">" -> if (e >= endValue) { datePressure += "$i: $e, " }
                     "<" -> if (e <= endValue) { datePressure += "$i: $e, " }
                 }
-            }
-
-            if (endValue == "prev"){
+            } else if (endValue == "prev"){
                 when (sign) {
                     ">" -> if (e > j) { datePressure += "$i: $e, " }
                     "<" -> if (e < j) { datePressure += "$i: $e, " }
@@ -48,9 +43,7 @@ fun foo(inputName: String, query: String, outputName: String) {
                 j = e
             }
 
-
         }
-
 
         n += 1
     }
