@@ -2,45 +2,36 @@ import java.io.File
 
 fun foo(inputName: String, query: String, outputName: String) {
     val data = File(inputName).readLines().joinToString().replace(",,",",").split(",")
-    var n = 0
-    val pairIntString = mutableListOf<List<Pair<String,String>>>()
-    while (n != data.size - 1){
-        val k = data[n].split(":")
-        pairIntString += mutableListOf(Pair(k[0].trim(), k[1].trim()))
-        n += 1
-    }
-
-    n = 0
     val stringSplit = query.split(" ")
     val sign = stringSplit[1]
     val endValue = stringSplit.last()
     val startValue = stringSplit.first()
     var datePressure = ""
     var j = ""
-    while (n != pairIntString.size) {
+    var n = 0
+    while (n != data.size - 1){
 
-        for ((i,e) in pairIntString[n]) {
+        val k = data[n].split(":")
+        val (i,e) = Pair(k[0].trim(), k[1].trim())
 
-            if (stringSplit.size == 5) {
-                when (stringSplit[1] + stringSplit[3]) {
-                    ">>" -> if (e >= startValue && e >= endValue) datePressure += "$i: $e, "
-                    "<<" -> if (e <= startValue && e <= endValue) datePressure += "$i: $e, "
-                    "<>" -> if (e <= startValue && e >= endValue) datePressure += "$i: $e, "
-                    "><" -> if (e >= startValue && e <= endValue) datePressure += "$i: $e, "
-                }
-            } else if (endValue != "prev") {
-                when (sign) {
-                    ">" -> if (e >= endValue) datePressure += "$i: $e, "
-                    "<" -> if (e <= endValue) datePressure += "$i: $e, "
-                }
-            } else if (endValue == "prev"){
-                when (sign) {
-                    ">" -> if (e > j) datePressure += "$i: $e, "
-                    "<" -> if (e < j) datePressure += "$i: $e, "
-                }
-                j = e
+        if (stringSplit.size == 5) {
+            when (stringSplit[1] + stringSplit[3]) {
+                ">>" -> if (e >= startValue && e >= endValue) datePressure += "$i: $e, "
+                "<<" -> if (e <= startValue && e <= endValue) datePressure += "$i: $e, "
+                "<>" -> if (e <= startValue && e >= endValue) datePressure += "$i: $e, "
+                "><" -> if (e >= startValue && e <= endValue) datePressure += "$i: $e, "
             }
-
+        } else if (endValue != "prev") {
+            when (sign) {
+                ">" -> if (e >= endValue) datePressure += "$i: $e, "
+                "<" -> if (e <= endValue) datePressure += "$i: $e, "
+            }
+        } else if (endValue == "prev"){
+            when (sign) {
+                ">" -> if (e > j) datePressure += "$i: $e, "
+                "<" -> if (e < j) datePressure += "$i: $e, "
+            }
+            j = e
         }
 
         n += 1
@@ -49,6 +40,57 @@ fun foo(inputName: String, query: String, outputName: String) {
     File(outputName).printWriter().use { e -> e.println(datePressure.dropLast(2)) }
     println(datePressure.dropLast(2))
 }
+
+
+//fun foo(inputName: String, query: String, outputName: String) {
+//    val data = File(inputName).readLines().joinToString().replace(",,",",").split(",")
+//    var n = 0
+//    val pairIntString = mutableListOf<List<Pair<String,String>>>()
+//    while (n != data.size - 1){
+//        val k = data[n].split(":")
+//        pairIntString += mutableListOf(Pair(k[0].trim(), k[1].trim()))
+//        n += 1
+//    }
+//
+//    n = 0
+//    val stringSplit = query.split(" ")
+//    val sign = stringSplit[1]
+//    val endValue = stringSplit.last()
+//    val startValue = stringSplit.first()
+//    var datePressure = ""
+//    var j = ""
+//    while (n != pairIntString.size) {
+//
+//        for ((i,e) in pairIntString[n]) {
+//
+//            if (stringSplit.size == 5) {
+//                when (stringSplit[1] + stringSplit[3]) {
+//                    ">>" -> if (e >= startValue && e >= endValue) datePressure += "$i: $e, "
+//                    "<<" -> if (e <= startValue && e <= endValue) datePressure += "$i: $e, "
+//                    "<>" -> if (e <= startValue && e >= endValue) datePressure += "$i: $e, "
+//                    "><" -> if (e >= startValue && e <= endValue) datePressure += "$i: $e, "
+//                }
+//            } else if (endValue != "prev") {
+//                when (sign) {
+//                    ">" -> if (e >= endValue) datePressure += "$i: $e, "
+//                    "<" -> if (e <= endValue) datePressure += "$i: $e, "
+//                }
+//            } else if (endValue == "prev"){
+//                when (sign) {
+//                    ">" -> if (e > j) datePressure += "$i: $e, "
+//                    "<" -> if (e < j) datePressure += "$i: $e, "
+//                }
+//                j = e
+//            }
+//
+//        }
+//
+//        n += 1
+//    }
+//
+//    File(outputName).printWriter().use { e -> e.println(datePressure.dropLast(2)) }
+//    println(datePressure.dropLast(2))
+//}
 
 //fun foo(inputName: String, query: String, outputName: String) {
 //    var y = File(inputName).readLines().joinToString()
