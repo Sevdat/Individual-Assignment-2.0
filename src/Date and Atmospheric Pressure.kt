@@ -25,20 +25,20 @@ fun foo(inputName: String, query: String, outputName: String) {
 
             if (stringSplit.size == 5) {
                 when (stringSplit[1] + stringSplit[3]) {
-                    ">>" -> if (e >= startValue && e >= endValue) { datePressure += "$i: $e, " }
-                    "<<" -> if (e <= startValue && e <= endValue) { datePressure += "$i: $e, " }
-                    "<>" -> if (e <= startValue && e >= endValue) { datePressure += "$i: $e, " }
-                    "><" -> if (e >= startValue && e <= endValue) { datePressure += "$i: $e, " }
+                    ">>" -> if (e >= startValue && e >= endValue) datePressure += "$i: $e, "
+                    "<<" -> if (e <= startValue && e <= endValue) datePressure += "$i: $e, "
+                    "<>" -> if (e <= startValue && e >= endValue) datePressure += "$i: $e, "
+                    "><" -> if (e >= startValue && e <= endValue) datePressure += "$i: $e, "
                 }
             } else if (endValue != "prev") {
                 when (sign) {
-                    ">" -> if (e >= endValue) { datePressure += "$i: $e, " }
-                    "<" -> if (e <= endValue) { datePressure += "$i: $e, " }
+                    ">" -> if (e >= endValue) datePressure += "$i: $e, "
+                    "<" -> if (e <= endValue) datePressure += "$i: $e, "
                 }
             } else if (endValue == "prev"){
                 when (sign) {
-                    ">" -> if (e > j) { datePressure += "$i: $e, " }
-                    "<" -> if (e < j) { datePressure += "$i: $e, " }
+                    ">" -> if (e > j) datePressure += "$i: $e, "
+                    "<" -> if (e < j) datePressure += "$i: $e, "
                 }
                 j = e
             }
