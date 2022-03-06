@@ -51,13 +51,6 @@ fun myFun(inputName: String, days: String): Any = TODO()
 
 fun myFun(inputName: String, days: String): Any {
 
-    var interval =
-        days.replace(Regex("""[^0-9]""")," ")
-            .trim().split(" ").filter { e -> e != ""}
-    var month =
-        days.replace(Regex("""[0-9]""")," ").replace("...", "")
-            .trim().split(" ").filter { e -> e != ""}.toMutableList()
-
     var monthMap = mutableMapOf(
         "Январь" to "0", "Февраль" to "0","Март" to "0",
         "Апрель" to "0", "Май" to "0", "Июнь" to "0",
@@ -66,33 +59,30 @@ fun myFun(inputName: String, days: String): Any {
     )
 
     val data = File(inputName).readLines()
-    var x = 0
-    var d = ""
-    var dv = ""
-    while (x != data.size){
-        d = data[x].split(" ").drop(1).joinToString().filter { e -> e != ',' }
-        dv = data[x].split(" ")[0]
-        monthMap[dv] = d
-        x += 1
+    var line = 0
+    var growth = ""
+    var time = ""
+    while (line != data.size){
+        growth = data[line].split(" ").drop(1).joinToString().filter { e -> e != ',' }
+        time = data[line].split(" ")[0]
+        monthMap[time] = growth
+        line += 1
     }
 
     monthMap = monthMap.filterValues { s -> s.split(" ").size > 1} as MutableMap<String, String>
 
-x =0
+    line = 0
 
-    var final = ""
     var monthdoor = 0
     var daydoor = 0
     var collector = 0
     var date = ""
-    while (final != month[0]) {
+    val interval = days.replace(Regex("""[^0-9]""")," ").split(" ").filter { e -> e != ""}
+    val month = days.replace(Regex("""[0-9.]""")," ").split(" ").filter { e -> e != ""}
 
             for ((i, e) in monthMap) {
 
-                when(month.size){
-                  2 -> if (month[0] == i) monthdoor = 1
-                  1 -> if (month[0] == i) monthdoor = 1
-                }
+                if (month[0] == i) monthdoor = 1
 
                 if (monthdoor == 1) {
                     val f = e.split(" ")
@@ -108,23 +98,18 @@ x =0
 
                         when(month.size) {
                           2 ->  if (interval[1].toInt() == index && month[1] == i) daydoor = 0
-                          1 ->  if (interval[1].toInt() == index) daydoor = 2
+                          1 ->  if (interval[1].toInt() == index) daydoor = 0
                         }
 
                     }
                 }
                 when(month.size){
                     2 -> if (month[1] == i) monthdoor = 0
-                    1 -> if (daydoor == 2) monthdoor = 0
-                }
-                when (month.size){
-                    2 -> if (month[1] == i) final = month[0]
-                    1 -> if (daydoor == 2) final  = month[0]
+                    1 -> if (daydoor == 0) monthdoor = 0
                 }
 
            }
 
-        }
     println(date)
     return date
 }
