@@ -73,18 +73,20 @@ fun foo(inputName: String, query: String): Any {
   var bar = ""
    if (choice != "*") while(count != matrix.size){
 
-    if(corrupted[count] == "?") question = 1
     when{
      corrupted[count] == "?" -> bar = matrix[count]
      matrix[count] != corrupted[count] -> bar = ""
      matrix[count] == corrupted[count] -> bar = matrix[count]
     }
-
+    if (corrupted[count] == "?") question = 1
     collect += bar
-   if (collect.split("").filter { e -> e != ""  && e != " " }.size == corrupted.size) order += collect
     count +=1
 
-    when (question){
+    if (count == matrix.size) {
+
+   if (collect.split("").filter { e -> e != ""  && e != " " }.size == corrupted.size) order += collect
+
+     when (question){
      1 -> if (number == order && splitmount[0] >= value) second += name
      0 -> when {
       (number == order && splitmount[0] >= value)->
@@ -92,6 +94,7 @@ fun foo(inputName: String, query: String): Any {
       (number == order && splitmount[0] < value) ->
        second += "$name, недостаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
      }
+    }
 
     }
 
