@@ -47,13 +47,13 @@ fun foo (inputName: String, query: String): Any = TODO()
 
 
 fun foo(inputName: String, query: String): Any {
+ val product = File(inputName).readLines()
+ val second = mutableListOf<String>()
  val demand = query.split(" ")
  val choice = demand[0].trim()
  val value = demand[1].trim()
  val corrupted = choice.split("").filter { e -> e != "" }
 
- val product = File(inputName).readLines()
- val second = mutableListOf<String>()
  for (i in product){
   val split = i.split("-")
   val number = split[0].trim()
@@ -71,9 +71,9 @@ fun foo(inputName: String, query: String): Any {
   var collect = ""
   var order = ""
   var bar = ""
-   if (choice != "*") while(count != matrix.size){
 
-    when{
+   if (choice != "*") while (count != matrix.size) {
+     when {
      corrupted[count] == "?" -> bar = matrix[count]
      matrix[count] != corrupted[count] -> bar = ""
      matrix[count] == corrupted[count] -> bar = matrix[count]
@@ -83,8 +83,7 @@ fun foo(inputName: String, query: String): Any {
     count +=1
 
     if (count == matrix.size) {
-
-   if (collect.split("").filter { e -> e != ""  && e != " " }.size == corrupted.size) order += collect
+   if (collect.split("").filter { e -> e != "" }.size == corrupted.size) order += collect
 
      when (question){
      1 -> if (number == order && splitmount[0] >= value) second += name
@@ -95,7 +94,6 @@ fun foo(inputName: String, query: String): Any {
        second += "$name, недостаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
      }
     }
-
     }
 
    } else if (splitmount[0] >= value) second += name
