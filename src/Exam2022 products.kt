@@ -53,7 +53,7 @@ fun foo(inputName: String, query: String): Any {
  val corrupted = choice.split("").filter { e -> e != "" }
 
  val product = File(inputName).readLines()
- var second = ""
+ val second = mutableListOf<String>()
  for (i in product){
   val split = i.split("-")
   val number = split[0].trim()
@@ -84,19 +84,21 @@ fun foo(inputName: String, query: String): Any {
    if (collect.split("").filter { e -> e != ""  && e != " " }.size == corrupted.size) order += collect
     count +=1
 
-   } else if (splitmount[0] >= value) second += "$name, "
+    when (question){
+     1 -> if (number == order && splitmount[0] >= value) second += name
+     0 -> when {
+      (number == order && splitmount[0] >= value)->
+       second += "$name, достаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
+      (number == order && splitmount[0] < value) ->
+       second += "$name, недостаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
+     }
 
-  when (question){
-   1 -> if (number == order && splitmount[0] >= value)
-    return name
-   0 -> if (number == order && splitmount[0] >= value)
-    return "$name, достаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
-   else if (number == order && splitmount[0] < value)
-    return "$name, недостаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
-  }
+    }
+
+   } else if (splitmount[0] >= value) second += name
 
  }
- second = second.dropLast(2)
+
  return second
 }
 
