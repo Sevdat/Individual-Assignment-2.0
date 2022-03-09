@@ -47,46 +47,56 @@ fun foo (inputName: String, query: String): Any = TODO()
 
 
 fun foo(inputName: String, query: String): Any {
- val x = File(inputName).readLines()
- val choice = query.split(" ")
- val corrupted = query.split(" ")[0].split("").filter { e -> e != ""  && e != " " }
- var bar = ""
- var second = ""
+ val demand = query.split(" ")
+ val choice = demand[0].trim()
+ val value = demand[1].trim()
+ val corrupted = choice.split("").filter { e -> e != "" }
 
- for (i in x){
+ val product = File(inputName).readLines()
+ var second = ""
+ for (i in product){
   val split = i.split("-")
-  val matrix = split[0].split("").filter { e -> e != ""  && e != " " }
+  val number = split[0].trim()
+  val matrix = number.split("").filter { e -> e != "" }
+
+  val info = split.drop(1)[0].trim().split(",")
+  val name = info[0].trim()
+  val price = info[1].trim()
+  val splice = price.split(" ")
+  val amount = info[2].trim()
+  val splitmount = amount.split(" ")
+
   var count = 0
+  var question = 0
   var collect = ""
   var order = ""
-  val info = split.drop(1)[0].trim().split(",")
-  var question = 0
+  var bar = ""
+   if (choice != "*") while(count != matrix.size){
 
-   if (choice[0].trim() != "*") while(count != matrix.size){
-    if(corrupted[count] == "?")  question = 1
+    if(corrupted[count] == "?") question = 1
     when{
      corrupted[count] == "?" -> bar = matrix[count]
      matrix[count] != corrupted[count] -> bar = ""
      matrix[count] == corrupted[count] -> bar = matrix[count]
     }
+
     collect += bar
    if (collect.split("").filter { e -> e != ""  && e != " " }.size == corrupted.size) order += collect
     count +=1
 
-   } else if (info[2].trim().split(" ")[0] > choice[1]) second += info[0] + " "
+   } else if (splitmount[0] >= value) second += "$name, "
 
   when (question){
- 1 -> if (split[0].trim() == order && info[2].trim().split(" ")[0] > choice[1])
-  return info[0].trim()
- 0 -> if (split[0].trim() == order && info[2].trim().split(" ")[0] > choice[1])
-  return "${info[0].trim()}, достаточно, " +
-          "${info[2].trim().split(" ")[0].toInt()*info[1].trim().split(" ")[0].toInt()}"
- else "${info[0].trim()}, недостаточно, " +
-         "${info[2].trim().split(" ")[0].toInt()*info[1].trim().split(" ")[0].toInt()}"
-}
- }
+   1 -> if (number == order && splitmount[0] >= value)
+    return name
+   0 -> if (number == order && splitmount[0] >= value)
+    return "$name, достаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
+   else if (number == order && splitmount[0] < value)
+    return "$name, недостаточно, ${splitmount[0].toInt() * splice[0].toInt()} ${splice[1]}"
+  }
 
- second = second.dropLast(1)
+ }
+ second = second.dropLast(2)
  return second
 }
 
