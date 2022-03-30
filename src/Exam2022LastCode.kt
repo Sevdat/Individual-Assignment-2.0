@@ -44,25 +44,25 @@ import java.io.File
 
 fun lastCode(inputName: String, src: String, dst: String): Any{
     val data = File(inputName).readLines()
-    val list1 = mutableListOf<String>()
-    val list2 = mutableListOf<String>()
-    var list3 = mutableListOf<String>()
+    val go = mutableListOf<String>()
+    val come = mutableListOf<String>()
+    var halftime = mutableListOf<String>()
     var x = 0
     for  (i in data){
         val split = i.split(" ")
         val land = split[1]
         val arrow = split[2]
         when {
-            (src == land && arrow == "<-") -> list1 += i
-            (dst == land && arrow == "->") -> list2 += i
+            (src == land && arrow == "<-") -> go += i
+            (dst == land && arrow == "->") -> come += i
         }
         x+=1
-        if (x == data.size && list1 != emptyList<String>() && list2 != emptyList<String>()) {
-            for (e in list1) for (k in list2){
+        if (x == data.size && go != emptyList<String>() && come != emptyList<String>()) {
+            for (e in go) for (k in come){
                 val time1 = e.split(" ")[3].split(":")
                 val time2 = k.split(" ")[3].split(":")
                 if (time1[0].toInt()*3600 + time1[1].toInt()*60
-                    - time2[0].toInt()*3600 - time2[1].toInt()*60 <= 1800) list3 += "$e|--|$k"
+                    - time2[0].toInt()*3600 - time2[1].toInt()*60 <= 1800) halftime += "$e|--|$k"
 
 
             }
@@ -70,9 +70,9 @@ fun lastCode(inputName: String, src: String, dst: String): Any{
 
 
     }
-    if (list3 != emptyList<String>()) list3 = list3.distinct().toMutableList()
-    if (list3 != emptyList<String>()) println(list3)
-    return if (list1.size > 0 && list2.size > 0) "yes" else "no"
+    if (halftime != emptyList<String>()) halftime = halftime.distinct().toMutableList()
+    if (halftime != emptyList<String>()) println(halftime)
+    return if (go.size > 0 && come.size > 0) "yes" else "no"
 }
 
 
