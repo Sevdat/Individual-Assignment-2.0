@@ -15,44 +15,44 @@ import java.io.File
 //var solve = Integer.toBinaryString('k'.code)
 //01011011
 //[
-fun encrypt(value:String, key:String):String {
+fun encrypt(text:String, key:String):String {
 
-    val newKey2 = mutableListOf<String>()
+    val binaryKey = mutableListOf<String>()
     for (k in key) {
         var newKey = Integer.toBinaryString(k.code)
         while (newKey.length != 8) {
             if (newKey.length != 8) newKey = "0$newKey"
         }
-        newKey2 += mutableListOf(newKey)
+        binaryKey += mutableListOf(newKey)
     }
 
-    var string = ""
-    var fill = ""
-    for (e in File(value).readText()) {
+    var xor = ""
+    var convert = ""
+    for (e in File(text).readText()) {
 
-        var newValue = Integer.toBinaryString(e.code)
-        while (newValue.length != 8) {
-            if (newValue.length != 8) newValue = "0$newValue"
+        var binaryChar = Integer.toBinaryString(e.code)
+        while (binaryChar.length != 8) {
+            if (binaryChar.length != 8) binaryChar = "0$binaryChar"
         }
 
             var y = 0
-            while (y != newKey2.size) {
+            while (y != binaryKey.size) {
                 var x = 0
                 while (x != 8) {
-                    string += if (newValue[x] != newKey2[y][x]) "1" else "0"
+                    xor += if (binaryChar[x] != binaryKey[y][x]) "1" else "0"
                     x += 1
                 }
                 y += 1
-                newValue = string
-                string = ""
+                binaryChar = xor
+                xor = ""
             }
-        string = newValue
-        fill += string.toInt(2).toChar().toString()
-        string = ""
+        xor = binaryChar
+        convert += xor.toInt(2).toChar().toString()
+        xor = ""
 
     }
-    println(fill)
-    return fill
+    println(convert)
+    return convert
 }
 // AZ = 33-58 , 33 = A
 //    println("FF".toInt(16))
