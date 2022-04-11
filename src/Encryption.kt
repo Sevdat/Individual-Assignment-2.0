@@ -29,11 +29,12 @@ fun encrypt(text:String, key:String):String {
     var xor = ""
     var convert = ""
     for (e in File(text).readText()) {
-
-        var binaryChar = Integer.toBinaryString(e.code)
-        while (binaryChar.length != 8) {
-            if (binaryChar.length != 8) binaryChar = "0$binaryChar"
-        }
+        if (e == '\r') convert += "\n"
+        if (e != '\n' && e != '\r') {
+            var binaryChar = Integer.toBinaryString(e.code)
+            while (binaryChar.length != 8) {
+                if (binaryChar.length != 8) binaryChar = "0$binaryChar"
+            }
 
             var y = 0
             while (y != binaryKey.size) {
@@ -46,10 +47,10 @@ fun encrypt(text:String, key:String):String {
                 binaryChar = xor
                 xor = ""
             }
-        xor = binaryChar
-        convert += xor.toInt(2).toChar().toString()
-        xor = ""
-
+            xor = binaryChar
+            convert += xor.toInt(2).toChar().toString()
+            xor = ""
+        }
     }
     println(convert)
     return convert
