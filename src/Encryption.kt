@@ -8,19 +8,20 @@ import java.io.File
     Command Line: ciphxor [-c key] [-d key] inputname.txt [-o outputname.txt]
  * Кроме самой программы, следует написать автоматические тесты к ней.
  */
-
+//works slower
+//newKey = "00000000".dropLast(newKey.length) + newKey
 fun encrypt(text:String, key:String):String {
 
+    val splitKey = key.replace(" ","").split("").filter { e-> e != "" }
     val binaryKey = mutableListOf<String>()
-    val splitKey = key.split("").filter { e-> e != "" && e != " " }
     var doubleChar = 0
     while (doubleChar <= splitKey.size / 2) {
         val hex = "${splitKey[doubleChar]}${splitKey[doubleChar + 1]}"
         var newKey = Integer.toBinaryString(hex.toInt(16))
         while (newKey.length != 8) {
-            if (newKey.length != 8) newKey = "0$newKey"
+            newKey = "0$newKey"
         }
-        binaryKey += mutableListOf(newKey)
+        binaryKey += newKey
         doubleChar += 2
     }
 
@@ -31,7 +32,7 @@ fun encrypt(text:String, key:String):String {
             (e != '\n' && e != '\r') -> {
                 var binaryChar = Integer.toBinaryString(e.code)
                 while (binaryChar.length != 8) {
-                    if (binaryChar.length != 8) binaryChar = "0$binaryChar"
+                    binaryChar = "0$binaryChar"
                 }
 
                 var y = 0
@@ -52,6 +53,7 @@ fun encrypt(text:String, key:String):String {
             (e == '\r') -> convert += "\n"
         }
     }
+    File("src/Encrypted.txt").writeText(convert)
     return convert
 }
 //var text = "Hello World"
