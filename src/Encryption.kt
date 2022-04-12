@@ -9,52 +9,60 @@ import java.io.File
  * Кроме самой программы, следует написать автоматические тесты к ней.
  */
 
+fun encrypt(text:String, key:String):String {
+
+    val binaryKey = mutableListOf<String>()
+    val splitKey = key.split("").filter { e-> e != "" && e != " " }
+    var doubleChar = 0
+    while (doubleChar <= splitKey.size / 2) {
+        val hex = "${splitKey[doubleChar]}${splitKey[doubleChar + 1]}"
+        var newKey = Integer.toBinaryString(hex.toInt(16))
+        while (newKey.length != 8) {
+            if (newKey.length != 8) newKey = "0$newKey"
+        }
+        binaryKey += mutableListOf(newKey)
+        doubleChar += 2
+    }
+
+    var xor = ""
+    var convert = ""
+    for (e in File(text).readText()) {
+        when {
+            (e != '\n' && e != '\r') -> {
+                var binaryChar = Integer.toBinaryString(e.code)
+                while (binaryChar.length != 8) {
+                    if (binaryChar.length != 8) binaryChar = "0$binaryChar"
+                }
+
+                var y = 0
+                while (y != binaryKey.size) {
+                    var x = 0
+                    while (x != 8) {
+                        xor += if (binaryChar[x] != binaryKey[y][x]) "1" else "0"
+                        x += 1
+                    }
+                    y += 1
+                    binaryChar = xor
+                    xor = ""
+                }
+                xor = binaryChar
+                convert += xor.toInt(2).toChar().toString()
+                xor = ""
+            }
+            (e == '\r') -> convert += "\n"
+        }
+    }
+    return convert
+}
 //var text = "Hello World"
 //var lol = Integer.toBinaryString('0'.code)
 //var key = Integer.toBinaryString('B'.code)
 //var solve = Integer.toBinaryString('k'.code)
 //01011011
 //[
-fun encrypt(text:String, key:String):String {
-
-    val binaryKey = mutableListOf<String>()
-    for (k in key) {
-        var newKey = Integer.toBinaryString(k.code)
-        while (newKey.length != 8) {
-            if (newKey.length != 8) newKey = "0$newKey"
-        }
-        binaryKey += mutableListOf(newKey)
-    }
-
-    var xor = ""
-    var convert = ""
-    for (e in File(text).readText()) {
-        if (e == '\r') convert += "\n"
-        if (e != '\n' && e != '\r') {
-            var binaryChar = Integer.toBinaryString(e.code)
-            while (binaryChar.length != 8) {
-                if (binaryChar.length != 8) binaryChar = "0$binaryChar"
-            }
-
-            var y = 0
-            while (y != binaryKey.size) {
-                var x = 0
-                while (x != 8) {
-                    xor += if (binaryChar[x] != binaryKey[y][x]) "1" else "0"
-                    x += 1
-                }
-                y += 1
-                binaryChar = xor
-                xor = ""
-            }
-            xor = binaryChar
-            convert += xor.toInt(2).toChar().toString()
-            xor = ""
-        }
-    }
-    println(convert)
-    return convert
-}
+//      var newKey = Integer.toBinaryString(k.code)
+//val splitKey = "6B73".split(Regex("""(|..)"""))
+//println(Integer.toBinaryString("08".toInt(16)))
 // AZ = 33-58 , 33 = A
 //    println("FF".toInt(16))
 //    println('a'.code)
