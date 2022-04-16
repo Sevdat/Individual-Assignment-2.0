@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.experimental.xor
 
 /**
  * Шифрация (-c) или дешифрация (-d) указанного (в аргументе командной строки) файла.
@@ -10,52 +11,89 @@ import java.io.File
  */
 //works slower
 //newKey = "00000000".dropLast(newKey.length) + newKey
-fun encrypt(text:String, key:String):String {
+fun encrypt(text: String, key:String) {
 
     val splitKey = key.replace(" ","").split("").filter { e-> e != "" }
-    val binaryKey = mutableListOf<String>()
+    val binaryKey = mutableListOf<Byte>()
     var doubleChar = 0
     while (doubleChar <= splitKey.size / 2) {
         val hex = "${splitKey[doubleChar]}${splitKey[doubleChar + 1]}"
-        var newKey = Integer.toBinaryString(hex.toInt(16))
-        while (newKey.length != 8) {
-            newKey = "0$newKey"
-        }
+        val newKey = hex.toInt(16).toByte()
         binaryKey += newKey
         doubleChar += 2
     }
 
-    var xor = ""
-    var convert = ""
-    for (e in File(text).readText()) {
+    var xor: Byte
+    val edit = File("src/Encrypted.txt").outputStream()
+    for (e in File(text).inputStream().readBytes()) {
+        var y = 0
+        var s = e
         when {
-            (e != '\n' && e != '\r') -> {
-                var binaryChar = Integer.toBinaryString(e.code)
-                while (binaryChar.length != 8) {
-                    binaryChar = "0$binaryChar"
-                }
-
-                var y = 0
+            (e != '\n'.code.toByte() && e != '\r'.code.toByte()) -> {
                 while (y != binaryKey.size) {
-                    var x = 0
-                    while (x != 8) {
-                        xor += if (binaryChar[x] != binaryKey[y][x]) "1" else "0"
-                        x += 1
-                    }
+                    xor = s xor binaryKey[y]
+                    s = xor
                     y += 1
-                    binaryChar = xor
-                    xor = ""
+                    if (y == binaryKey.size) edit.write(xor.toInt())
                 }
-                xor = binaryChar
-                convert += xor.toInt(2).toChar().toString()
-                xor = ""
             }
-            (e == '\r') -> convert += "\n"
+            (e == '\r'.code.toByte()) -> edit.write('\r'.code)
         }
     }
-    File("src/Encrypted.txt").writeText(convert)
-    return convert
 }
+// 13 = 'r' 10 = 'n'
+//InputStream()
+//Reader()
+//Writer()
+//  val read = File(text).reader().read()
+
+//fun encrypt(text:String, key:String):String {
+//
+//    val splitKey = key.replace(" ","").split("").filter { e-> e != "" }
+//    val binaryKey = mutableListOf<String>()
+//    var doubleChar = 0
+//    while (doubleChar <= splitKey.size / 2) {
+//        val hex = "${splitKey[doubleChar]}${splitKey[doubleChar + 1]}"
+//        var newKey = Integer.toBinaryString(hex.toInt(16))
+//        while (newKey.length != 8) {
+//            newKey = "0$newKey"
+//        }
+//        binaryKey += newKey
+//        doubleChar += 2
+//    }
+//
+//    var xor = ""
+//    var convert = ""
+//    for (e in File(text).readText()) {
+//        when {
+//            (e != '\n' && e != '\r') -> {
+//                var binaryChar = Integer.toBinaryString(e.code)
+//                while (binaryChar.length != 8) {
+//                    binaryChar = "0$binaryChar"
+//                }
+//
+//                var y = 0
+//                while (y != binaryKey.size) {
+//                    var x = 0
+//                    while (x != 8) {
+//                        xor += if (binaryChar[x] != binaryKey[y][x]) "1" else "0"
+//                        x += 1
+//                    }
+//                    y += 1
+//                    binaryChar = xor
+//                    xor = ""
+//                }
+//                xor = binaryChar
+//                convert += xor.toInt(2).toChar().toString()
+//                xor = ""
+//            }
+//            (e == '\r') -> convert += "\n"
+//        }
+//    }
+//    File("src/Encrypted.txt").writeText(convert)
+//    return convert
+//}
+
 //var text = "Hello World"
 //var lol = Integer.toBinaryString('0'.code)
 //var key = Integer.toBinaryString('B'.code)
