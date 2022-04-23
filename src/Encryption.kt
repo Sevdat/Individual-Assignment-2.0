@@ -40,6 +40,7 @@ fun encrypt(text: String, key:String) {
             (e == '\r'.code.toByte()) -> edit.write('\r'.code)
         }
     }
+    edit.close()
 }
 // 13 = 'r' 10 = 'n'
 //InputStream()

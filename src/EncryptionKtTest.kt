@@ -21,6 +21,7 @@ internal class EncryptionKtTest {
             encrypt("src/Encryption.txt","6B 73"),
             "(((\n((("
         )
+        File("src/Encrypted.txt").delete()
     }
 }
 //internal class EncryptionKtTest {
