@@ -13,6 +13,11 @@ import kotlin.experimental.xor
 //newKey = "00000000".dropLast(newKey.length) + newKey
 fun encrypt(text: String, key:String) {
 
+    if (
+        key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty()
+    )
+        throw IllegalArgumentException("Key Error")
+
     val splitKey = key.replace(" ","").split("").filter { e-> e != "" }
     val binaryKey = mutableListOf<Byte>()
     var doubleChar = 0
