@@ -12,13 +12,13 @@ import kotlin.experimental.xor
 //works slower
 //newKey = "00000000".dropLast(newKey.length) + newKey
 fun encrypt(text: String, key:String) {
-
+    val removeSpace = key.replace(" ","")
     if (
-        key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty()
+        key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty() || removeSpace.length % 2 != 0
     )
         throw IllegalArgumentException("Key Error")
 
-    val splitKey = key.replace(" ","").split("").filter { e-> e != "" }
+    val splitKey = removeSpace.split("").filter { e-> e != "" }
     val binaryKey = mutableListOf<Byte>()
     var doubleChar = 0
     while (doubleChar <= splitKey.size / 2) {
