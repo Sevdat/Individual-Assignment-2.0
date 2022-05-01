@@ -11,7 +11,10 @@ import kotlin.experimental.xor
  */
 //works slower
 //newKey = "00000000".dropLast(newKey.length) + newKey
+
+// string needs to be file
 fun encrypt(text: String, key:String) {
+
     val removeSpace = key.replace(" ","")
     if (
         key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty() || removeSpace.length % 2 != 0
@@ -27,7 +30,7 @@ fun encrypt(text: String, key:String) {
         binaryKey += newKey
         doubleChar += 2
     }
-
+//use
     var xor: Byte
     val edit = File("src/Encrypted.txt").outputStream()
     for (e in File(text).inputStream().readBytes()) {
