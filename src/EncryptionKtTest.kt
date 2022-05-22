@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.Assertions.*
 import java.io.File
 
@@ -14,12 +13,12 @@ internal class EncryptionKtTest {
     @Test
     fun encrypt() {
         assert(
-            encrypt("src/Encryption.txt","6B"),
-            "[[[\n[[["
+            encrypt(File("src/Encryption.txt"),"6B"),
+            "[[[fa[[["
         )
         assert(
-            encrypt("src/Encryption.txt","6B 73"),
-            "(((\n((("
+            encrypt(File("src/Encryption.txt"),"6B 73"),
+            "[C[~aC[C"
         )
         File("src/Encrypted.txt").delete()
     }

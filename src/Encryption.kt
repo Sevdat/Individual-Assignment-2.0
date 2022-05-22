@@ -13,42 +13,34 @@ import kotlin.experimental.xor
 //newKey = "00000000".dropLast(newKey.length) + newKey
 
 // string needs to be file
-fun encrypt(text: String, key:String) {
-
-    val removeSpace = key.replace(" ","")
+fun encrypt(text: File, key: String) {
+    val removeKeySpace = key.replace(" ", "")
     if (
-        key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty() || removeSpace.length % 2 != 0
+        key.replace(Regex("""[0-9A-F ]"""), "").isNotEmpty() || removeKeySpace.length % 2 != 0
     )
         throw IllegalArgumentException("Key Error")
 
-    val splitKey = removeSpace.split("").filter { e-> e != "" }
-    val binaryKey = mutableListOf<Byte>()
+    val splitKey = removeKeySpace.split("").filter { e -> e != "" }
+    val hexToByteList = mutableListOf<Byte>()
     var doubleChar = 0
     while (doubleChar <= splitKey.size / 2) {
         val hex = "${splitKey[doubleChar]}${splitKey[doubleChar + 1]}"
         val newKey = hex.toInt(16).toByte()
-        binaryKey += newKey
+        hexToByteList += newKey
         doubleChar += 2
     }
-//use
-    var xor: Byte
-    val edit = File("src/Encrypted.txt").outputStream()
-    for (e in File(text).inputStream().readBytes()) {
-        var y = 0
-        var s = e
-        when {
-            (e != '\n'.code.toByte() && e != '\r'.code.toByte()) -> {
-                while (y != binaryKey.size) {
-                    xor = s xor binaryKey[y]
-                    s = xor
-                    y += 1
-                    if (y == binaryKey.size) edit.write(xor.toInt())
-                }
-            }
-            (e == '\r'.code.toByte()) -> edit.write('\r'.code)
+
+    var encrypt: Byte
+    var listIndex = 0
+    File("src/Encrypted.txt").outputStream().use {
+        for (letter in text.inputStream().readBytes()) {
+            encrypt = letter xor hexToByteList[listIndex]
+            listIndex += 1
+            it.write(encrypt.toInt())
+            if (listIndex == hexToByteList.size) listIndex = 0
         }
     }
-    edit.close()
+
 }
 // 13 = 'r' 10 = 'n'
 //InputStream()
