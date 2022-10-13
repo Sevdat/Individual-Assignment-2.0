@@ -6,36 +6,58 @@ import kotlin.test.assertEquals
 data class Commands(val input:String, val decimal: Int ,val current: Int, val converted: Int)
 
 fun decToBinOrOct(commands: Commands): String{
+    val table = truthTable()
     val data = commands.input.split(Regex("""[,.]"""))
     var result = ""
     var count = 0.0
-    val decToBin = commands.current > commands.converted
+    val biggerToSmaller = commands.current > commands.converted
+    val choice = (commands.current == 8 || commands.current == 2 || commands.current == 10) &&
+            (commands.converted == 8 || commands.converted == 2 || commands.converted == 10)
+    val octToBin = (commands.current == 8 || commands.converted == 2) && (commands.converted == 8 || commands.current == 2)
     for ((i,e) in data.withIndex()){
         var collect = ""
         var empty = e.toInt()
-        if (decToBin) {
-            while (empty != 0) {
-                when (i) {
-                    0 -> {
-                        val remainder = empty % commands.converted
-                        collect += remainder.toString()
-                        empty = (empty - remainder) / commands.converted
+
+        when{
+            choice -> {
+                if (biggerToSmaller) {
+                 while (empty != 0) {
+                        when (i) {
+                            0 -> {
+                                if (octToBin){
+                                    var remains = e.length % 3
+                                    while (remains != 0){
+                                        collect = "0$e"
+                                        remains -= 1
+                                    }
+
+
+                                } else {
+                                val remainder = empty % commands.converted
+                                collect += remainder.toString()
+                                empty = (empty - remainder) / commands.converted
+                                }
+                            }
+                            1 -> {
+                                val remainder = "${"0.${empty}".toDouble() * commands.converted}"
+                                collect += remainder[0]
+                                val amountOfDecimal = (result.length == collect.length - commands.decimal)
+                                empty = if (amountOfDecimal) 0 else remainder.drop(2).toInt()
+                            }
+                        }
                     }
-                    1 -> {
-                        val remainder = "${"0.${empty}".toDouble() * commands.converted}"
-                        collect += remainder[0]
-                        val amountOfDecimal = (result.length == collect.length - commands.decimal)
-                        empty = if (amountOfDecimal) 0 else remainder.drop(2).toInt()
+                } else {
+                    for ((j,k) in e.withIndex()){
+                        val exponent = if (i == 0) (e.length - 1) - j else -j - 1
+                        count += k.toString().toDouble()*(commands.current.toDouble().pow(exponent))
+                        result = count.toString()
                     }
                 }
             }
-        } else {
-            for ((j,k) in e.withIndex()){
-                val exponent = if (i == 0) (e.length - 1) - j else -j - 1
-                count += k.toString().toDouble()*(commands.current.toDouble().pow(exponent))
-                result = count.toString()
-            }
+
+
         }
+
         result += if (i == 0) collect.reversed() else collect
         result += "."
     }
@@ -63,9 +85,8 @@ fun truthTable(): MutableList<MutableList<Int>>{
     return list
 }
 
+
 fun main(){
-    val table = truthTable()
-    println(table)
     fun binOctDecHex(commands: Commands): Any{
         val end = decToBinOrOct(commands)
         println(end)
