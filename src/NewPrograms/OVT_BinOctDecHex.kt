@@ -4,44 +4,92 @@ import kotlin.math.log2
 import kotlin.math.pow
 import kotlin.test.assertEquals
 
-data class Commands(val input: String, val decimal: Int, val current: Int, val converted: Int)
+///I don't like it...I want to write it in 1 loop :/
+
 var result = ""
 var collect = ""
 var count = 0.0
 
-fun binOctConvert(biggerToSmaller: Boolean, i: Int, e:String, size:Int) {
-    if (biggerToSmaller) {
+data class Commands(val input: String, val decimal: Int, val current: Int, val converted: Int){
+    val binOct = (current == 2 && converted == 8)
+    val octBin = (current == 8 && converted == 2)
+    val binDec = (current == 2 && converted == 10)
+    val decBin = (current == 10 && converted == 2)
+    val binHex = (current == 2 && converted == 16)
+    val hexBin = (current == 16 && converted == 2)
+    val octDec = (current == 8 && converted == 10)
+    val decOct = (current == 10 && converted == 8)
+    val octHex = (current == 8 && converted == 16)
+    val hexOct = (current == 16 && converted == 8)
+    val decHex = (current == 10 && converted == 16)
+    val hexDec = (current == 16 && converted == 10)
+    val binDecBinOctOctDec = binDec || binOct || octDec
+    val decBinOctBinDecOct = decBin || octBin || decOct
+
+}
+
+fun binOctDecHex(commands: Commands): String {
+    result = ""
+    val data = commands.input.split(Regex("""[,.]"""))
+    val size = data.size
+    for ((i, e) in data.withIndex()) {
+        collect = ""
+        when {
+            commands.octBin -> octToBinary(e)
+            commands.binOct -> numberConvert(i,e,size)
+            commands.binDecBinOctOctDec -> binaryToOctOrDec(i,e,commands)
+            commands.decBinOctBinDecOct -> decBinOct(i,e,size, commands)
+        }
+    }
+    collect = ""
+    println(result)
+    return result
+}
+
+fun truthTable(value: Int): String {
+    var binary = ""
+    if (value != 0) {
+        val log = log2(value.toDouble())
+        val amount = log.toInt() + 1
+        for (i in 0 until amount) {
+            binary += value / ((2.0).pow(i).toInt()) % 2
+        }
+    } else binary = "0"
+    return binary
+}
+
+fun octToBinary(e:String) {
         for (k in e) {
-            var binary = truth(k.toString().toInt())
+            var binary = truthTable(k.toString().toInt())
             while (binary.length != 3) {
                 binary = "0$binary"
             }
             result += binary
         }
-    } else {
-        collect = e
-        var remains = e.length % 3
-        while (remains != 0){
-            remains -= 1
-            if (remains != 0) collect = if (i == 0) "0$collect" else "${collect}0"
-        }
-        var stage = 3
-        var addition = 0
-        for (s in collect){
-            stage -= 1
-            addition += s.toString().toInt()*((2.0).pow(stage).toInt())
-            if (stage == 0) {
-                stage = 3
-                result += addition.toString()
-                addition = 0
-            }
-        }
-        if (i == 0 && size != 1) result += "."
-    }
 }
 
-fun decBinOct(biggerToSmaller: Boolean, i: Int, e:String, size:Int, commands: Commands){
-    if (biggerToSmaller) {
+fun numberConvert(i: Int, e:String, size:Int){
+    collect = e
+    var remains = e.length % 3
+    while (remains != 0){
+        remains -= 1
+        if (remains != 0) collect = if (i == 0) "0$collect" else "${collect}0"
+    }
+    var stage = 3
+    var addition = 0
+    for (s in collect){
+        stage -= 1
+        addition += s.toString().toInt()*((2.0).pow(stage).toInt())
+        if (stage == 0) {
+            stage = 3
+            result += addition.toString()
+            addition = 0
+        }
+    }
+    if (i == 0 && size != 1) result += "."
+}
+
+fun decBinOct(i: Int, e:String, size:Int, commands: Commands){
         var empty = e.toInt()
         while (empty != 0) {
             if (i == 0) {
@@ -57,59 +105,20 @@ fun decBinOct(biggerToSmaller: Boolean, i: Int, e:String, size:Int, commands: Co
         }
         result += if (i == 0) "${collect.reversed()}." else collect
         if (size == 1) result = result.dropLast(1)
-    } else {
-        for ((j, k) in e.withIndex()) {
-            val exponent = if (i == 0) (e.length - 1) - j else -j - 1
-            count += k.toString().toDouble() * (commands.current.toDouble().pow(exponent))
-        }
-        result = if (result == "") count.toInt().toString() else (result.toDouble() + count).toString()
-        count = 0.0
+}
+
+fun binaryToOctOrDec(i: Int, e:String, commands: Commands){
+    for ((j, k) in e.withIndex()) {
+        val exponent = if (i == 0) (e.length - 1) - j else -j - 1
+        count += k.toString().toDouble() * (commands.current.toDouble().pow(exponent))
     }
+    result = if (result == "") count.toInt().toString() else (result.toDouble() + count).toString()
+    count = 0.0
 }
-
-
-fun binOctDecHex(commands: Commands): String {
-    result = ""
-    val data = commands.input.split(Regex("""[,.]"""))
-    val size = data.size
-    val biggerToSmaller = commands.current > commands.converted
-    val binOct = (commands.current == 2 && commands.converted == 8) || (commands.current == 8 && commands.converted == 2)
-    val binDec = (commands.current == 2 && commands.converted == 10) || (commands.current == 10 && commands.converted == 2)
-    val binHex = (commands.current == 2 && commands.converted == 16) || (commands.current == 16 && commands.converted == 2)
-    val octDec = (commands.current == 8 && commands.converted == 10) || (commands.current == 10 && commands.converted == 8)
-    val octHex = (commands.current == 8 && commands.converted == 16) || (commands.current == 16 && commands.converted == 8)
-    val decHex = (commands.current == 10 && commands.converted == 16) || (commands.current == 16 && commands.converted == 10)
-    val binDecOrOctDec = binDec || binOct || octDec
-    for ((i, e) in data.withIndex()) {
-        collect = ""
-        when {
-            binOct -> binOctConvert(biggerToSmaller,i,e,size)
-            binDecOrOctDec -> decBinOct(biggerToSmaller,i,e,size, commands = commands)
-        }
-    }
-    collect = ""
-    println(result)
-    return result
-}
-
-fun truth(value: Int): String {
-    var binary = ""
-    if (value != 0) {
-        val log = log2(value.toDouble())
-        val amount = log.toInt() + 1
-        for (i in 0 until amount) {
-            binary += value / ((2.0).pow(i).toInt()) % 2
-        }
-    } else binary = "0"
-    return binary
-
-}
-
 
 fun main() {
 
     run {
-
         assertEquals("389.5625", binOctDecHex(Commands("110000101.1001", 7, 2, 10)))
         assertEquals("1010010010001.111110111010010111100", binOctDecHex(Commands("5265,983", 7, 10, 2)))
         assertEquals("110000101.1001", binOctDecHex(Commands("389,5625", 5, 10, 2)))
@@ -120,10 +129,11 @@ fun main() {
 
         assertEquals("001101111101", binOctDecHex(Commands("1575", 5, 8, 2)))
         assertEquals("1575", binOctDecHex(Commands("001101111101", 5, 2, 8)))
-        assertEquals("250.0765066", binOctDecHex(Commands("10101000.00011111010100011011", 5, 2, 8)))
-    }
 
+    }
 }
+
+
 
 
 //println(i[stop - count])
